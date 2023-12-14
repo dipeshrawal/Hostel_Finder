@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:hostel_finder/Menu_Page.dart';
+import 'package:hostel_finder/Navigation_Slider.dart';
 
 
 
@@ -26,32 +26,15 @@ class Visitor_Dashboard_state extends State<Visitor_Dashboard>{
     // TODO: implement build
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      drawer: Navigation_Slider(),
+      appBar: AppBar(
+        title: Image.asset('assets/images/header.png', height: 25, width: 270,),
+      ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 50),
+          padding: const EdgeInsets.only(left: 20,),
           child: Column(
             children: [
-              Row(
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Menu_Page()));
-                        // Add your login logic here
-                      },
-                      child: Icon(Icons.menu, color: Colors.black,),),
-                  SizedBox(width: 60,),
-                  Positioned(
-                    left: 200,
-                    child: Container(
-                      child: Image.asset('assets/images/header.png', height: 25, width: 200,),
-                    ),
-                  ),
-
-                ],
-              ),
-              SizedBox(height: 20,),
-              //Search Box
               Container(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 15),

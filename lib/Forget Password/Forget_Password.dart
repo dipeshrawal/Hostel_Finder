@@ -30,14 +30,14 @@ class Forget_Password_state extends State<Forget_Password>{
     // TODO: implement build
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/header.png', height: 25, width: 270,),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, top: 50, right: 20),
           child: Column(
             children: [
-              Container(
-                child: Image.asset('assets/images/header.png', height: 25, width: 200,),
-              ),
               SizedBox(height: 40,),
               Row(
                 children: [
