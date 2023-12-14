@@ -1,8 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:hostel_finder/Forget%20Password/Forget_Password.dart';
+import 'package:hostel_finder/Navigation_Menu.dart';
 import 'package:hostel_finder/Sign_Up.dart';
 import 'package:hostel_finder/Visitor_Dashboard.dart';
+import 'package:get/get.dart';
 
 
 class Login_Page extends StatefulWidget {
@@ -169,7 +171,7 @@ class loginpage_state extends State<Login_Page>{
               TextButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Visitor_Dashboard()));
+                      MaterialPageRoute(builder: (context) => NavigationMenu()));
                   //Act when the button is pressed
                 },
                 child: Text(
@@ -263,3 +265,4 @@ class loginpage_state extends State<Login_Page>{
   }
 
 }
+
