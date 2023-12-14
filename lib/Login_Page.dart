@@ -30,6 +30,7 @@ class loginpage_state extends State<Login_Page>{
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
+        padding: const EdgeInsets.only(left: 10, right: 10),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -211,6 +212,7 @@ class loginpage_state extends State<Login_Page>{
                         ),
                       ),
                     ),
+                    SizedBox(width:5,),
                     Positioned(
                       left: 190,
                       bottom:0,
