@@ -12,39 +12,39 @@ class Navigation_Slider extends StatelessWidget {
       child: ListView(
         children: [
           SizedBox(height: 30,),
-          ListTile(
-            leading: Container(
-                height:40,
-                width:40,
-              decoration: ShapeDecoration(
-                color: Color(0xFFFDFDFD),
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50, color: Color(0xFFE3E3E7)),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                shadows: [
-                  BoxShadow(
-                    color: Color(0x26454545),
-                    blurRadius: 16,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  )
-                ],
-              ),
-                child: Icon(Icons.person,size: 30),),
-            title: Text(
-              'Student Login',
-              style: TextStyle(
-                color: Color(0xFF1A1E25),
-                fontSize: 16,
-                fontFamily: 'Hind',
-                fontWeight: FontWeight.w500,
-                height: 0.06,
-                letterSpacing: 0.32,
-              ),
-            ),
-            onTap: () => Sign_Up(),
-          ),
+          // ListTile(
+          //   leading: Container(
+          //       height:40,
+          //       width:40,
+          //     decoration: ShapeDecoration(
+          //       color: Color(0xFFFDFDFD),
+          //       shape: RoundedRectangleBorder(
+          //         side: BorderSide(width: 0.50, color: Color(0xFFE3E3E7)),
+          //         borderRadius: BorderRadius.circular(10),
+          //       ),
+          //       shadows: [
+          //         BoxShadow(
+          //           color: Color(0x26454545),
+          //           blurRadius: 16,
+          //           offset: Offset(0, 4),
+          //           spreadRadius: 0,
+          //         )
+          //       ],
+          //     ),
+          //       child: Icon(Icons.person,size: 30),),
+          //   title: Text(
+          //     'Student Login',
+          //     style: TextStyle(
+          //       color: Color(0xFF1A1E25),
+          //       fontSize: 16,
+          //       fontFamily: 'Hind',
+          //       fontWeight: FontWeight.w500,
+          //       height: 0.06,
+          //       letterSpacing: 0.32,
+          //     ),
+          //   ),
+          //   onTap: () => Sign_Up(),
+          // ),
           ListTile(
             leading: Container(
               height:40,
