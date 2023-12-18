@@ -34,7 +34,6 @@ class welcomepage_state extends State<Welcome_Page>{
                   image: DecorationImage(
                     image: AssetImage('assets/images/second_background.png'),
                     fit: BoxFit.fill,
-
                   ),
                 ),
               ),
@@ -126,7 +125,7 @@ class welcomepage_state extends State<Welcome_Page>{
               ),
               Positioned(
                   bottom: 150,
-                  left: 50,
+                  left: size.width/10,
                   child: Center(
                     child: TextButton(
                       onPressed: () {
@@ -135,7 +134,7 @@ class welcomepage_state extends State<Welcome_Page>{
                         //Act when the button is pressed
                       },
                       child: Text(
-                        'Get Started                  ',
+                        'Get Started                         ',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -150,7 +149,7 @@ class welcomepage_state extends State<Welcome_Page>{
                       ),
                     ),
 
-                  )),
+                  ) ),
             ]
         ),
 
