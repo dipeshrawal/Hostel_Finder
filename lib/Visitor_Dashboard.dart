@@ -32,26 +32,25 @@ class Visitor_Dashboard_state extends State<Visitor_Dashboard>{
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20,),
+          padding: const EdgeInsets.only(left: 20, right: 15),
           child: Column(
             children: [
               Container(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                height: 50,
                   child: TextField(
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       filled: true,
                       fillColor: Colors.grey.withOpacity(0.3),
                       hintText: 'Search via hostel name, location' ,
+
                     ),
                     controller: search_controller,
                     style: TextStyle(color: Colors.black),
                   ),
-                ),
               ),
               SizedBox(height: 20,),
               Center(
@@ -66,8 +65,6 @@ class Visitor_Dashboard_state extends State<Visitor_Dashboard>{
               ),
 
               SizedBox(height: 20,),
-
-
             ],
           ),
         ),

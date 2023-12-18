@@ -89,20 +89,26 @@ class loginpage_state extends State<Login_Page>{
                     ),
               Padding(
                 padding: const EdgeInsets.all(8),
-                child: TextField(
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-
-                    border: OutlineInputBorder(
-
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey.withOpacity(0.2),
-
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12), // Adding padding inside the container
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8), // Rounded corners for the container
+                    color: Colors.grey.withOpacity(0.2),
                   ),
-                  controller: email_controller,
-                  style: TextStyle(color: Colors.black),),
+                  child: TextField(
+                    cursorColor: Colors.black,
+                    decoration: InputDecoration(
+                      border: InputBorder.none, // Remove the default border
+                      hintText: 'Enter your email here', // Adding hint text
+                      hintStyle: TextStyle(color: Colors.grey, fontSize: 15), // Hint text color
+                    ),
+                    controller: email_controller,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
               ),
+
+
 
               SizedBox(height: 20,),
               Padding(
@@ -125,21 +131,31 @@ class loginpage_state extends State<Login_Page>{
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
-                child: TextField(
-                  obscureText: isHidePassword,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.grey.withOpacity(0.2),
-                    suffixIcon: InkWell(
-                      onTap: _togglePasswordView,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12), // Adding padding inside the container
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8), // Rounded corners for the container
+                    color: Colors.grey.withOpacity(0.2),
+                  ),
+                  child: TextField(
+                    obscureText: isHidePassword,
+                    decoration: InputDecoration(
+                      border: InputBorder.none, // Remove the default border
+                      hintText: 'Enter your password', // Adding hint text
+                      hintStyle: TextStyle(color: Colors.grey, fontSize: 15), // Hint text color
+                      suffixIcon: InkWell(
+                        onTap: _togglePasswordView,
                         child: Icon(isHidePassword
                             ? Icons.visibility_off
-                            : Icons.visibility))
+                            : Icons.visibility),
+                      ),
+                    ),
+                    controller: password_controller,
+                    style: TextStyle(color: Colors.black),
                   ),
-                  controller: password_controller,
-                  style: TextStyle(color: Colors.black),),
+                ),
               ),
+
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -189,18 +205,11 @@ class loginpage_state extends State<Login_Page>{
                   backgroundColor: Color(0xFF14223B),
                 ),
               ),
-              SizedBox(height: 50,),
-              Container(
-                width: 320,
-                height: 35,
-                child: Stack(
+              SizedBox(height: 30,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Positioned(
-                      left: 5,
-                      top: 2,
-                      child: SizedBox(
-                        width: 221,
-                        height: 33,
+                    SizedBox(
                         child: Text(
                           'Don’t have an account?',
                           textAlign: TextAlign.center,
@@ -212,13 +221,8 @@ class loginpage_state extends State<Login_Page>{
                             height: 0,
                           ),
                         ),
-                      ),
                     ),
-                    SizedBox(width:5,),
-                    Positioned(
-                      left: 190,
-                      bottom:0,
-                          child: TextButton(
+                    TextButton(
                             onPressed: () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) => Sign_Up()));
@@ -234,11 +238,8 @@ class loginpage_state extends State<Login_Page>{
                               ),
                             ),
                           ),
-                      ),
                   ],
                 ),
-              ),
-
             ],
 
           ),

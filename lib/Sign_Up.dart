@@ -35,33 +35,16 @@ class Sign_Up_state extends State<Sign_Up>{
   Widget build(BuildContext context) {
     // TODO: implement build
     var size = MediaQuery.of(context).size;
+
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/header.png', height: 25, width: 270,),
+      ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20, top: 50),
+        padding: const EdgeInsets.only(left: 20, top: 20),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Login_Page()));
-                        // Add your login logic here
-                      },
-                      child: Icon(Icons.arrow_back)),
-                    SizedBox(width: 60,),
-                    Positioned(
-                      left: 200,
-                      child: Container(
-                        child: Image.asset('assets/images/header.png', height: 25, width: 200,),
-                      ),
-                    ),
-
-                ],
-              ),
-
-              SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.only(left: 5, right: 15),
                 child: Container(

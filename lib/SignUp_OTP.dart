@@ -29,30 +29,14 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
     // TODO: implement build
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/header.png', height: 25, width: 270,),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, top: 50, right: 20),
           child: Column(
             children: [
-              Row(
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Sign_Up()));
-                        // Add your login logic here
-                      },
-                      child: Icon(Icons.arrow_back)),
-                  SizedBox(width: 60,),
-                  Positioned(
-                    left: 200,
-                    child: Container(
-                      child: Image.asset('assets/images/header.png', height: 25, width: 200,),
-                    ),
-                  ),
-
-                ],
-              ),
               Container(
                 child: Image.asset('assets/images/OTP.png', height: 250, width: 300,),
               ),

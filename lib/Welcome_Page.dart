@@ -125,7 +125,7 @@ class welcomepage_state extends State<Welcome_Page>{
               ),
               Positioned(
                   bottom: 150,
-                  left: size.width/10,
+                  left: size.width/15,
                   child: Center(
                     child: TextButton(
                       onPressed: () {
