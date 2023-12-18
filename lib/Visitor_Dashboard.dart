@@ -68,7 +68,7 @@ class Visitor_Dashboard_state extends State<Visitor_Dashboard>{
               SizedBox(height: 20,),
 
               Container(
-                child: Text("I am Dipesh Rawal", style: TextStyle(fontSize: 20),),
+                child: Text("I am  Ranjit", style: TextStyle(fontSize: 20),),
               ),
             ],
           ),
