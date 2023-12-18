@@ -70,7 +70,6 @@ class Visitor_Dashboard_state extends State<Visitor_Dashboard>{
               Container(
                 child: Text("I am Dipesh Rawal"),
               ),
-
             ],
           ),
         ),
