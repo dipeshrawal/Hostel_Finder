@@ -30,6 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  firebase_core:
+  firebase_auth:
+  cloud_firestore:
 
 
 
@@ -42,6 +45,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
 
 
