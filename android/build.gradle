@@ -20,9 +20,6 @@ allprojects {
 
 rootProject.buildDir = '../build'
 
-dependencies {
-    implementation 'androidx.annotation:annotation'
-}
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
