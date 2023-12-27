@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:hostel_finder/Login_Page.dart';
 import 'package:hostel_finder/SignUp_OTP.dart';
 import 'package:hostel_finder/Welcome_Page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class Sign_Up extends StatefulWidget {
@@ -22,9 +24,16 @@ class Sign_Up_state extends State<Sign_Up>{
   TextEditingController phonenumber_controller = TextEditingController();
   TextEditingController address_controller = TextEditingController();
   TextEditingController password_controller = TextEditingController();
-  TextEditingController confirm_password_controller = TextEditingController();
+  //TextEditingController confirm_password_controller = TextEditingController();
   bool isHidePassword = true;
   bool isHideConfirmPassword = true;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  // Validation flag for each field
+  bool _isEmailValid = true;
+  bool _isPasswordValid = true;
+  bool _isContactValid = true;
 
   @override
   void initState(){
@@ -70,12 +79,18 @@ class Sign_Up_state extends State<Sign_Up>{
                   child: TextField(
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email),
+                      errorText: _isEmailValid ? null : 'Enter a valid email address',
                       border: OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.grey.withOpacity(0.3),
                       hintText: 'Email',
                     ),
                     controller: email_controller,
+                    onChanged: (value) {
+                      setState(() {
+                        _isEmailValid = _isValidEmail(value);
+                      });
+                    },
                     style: TextStyle(color: Colors.black),
 
                   ),
@@ -93,8 +108,14 @@ class Sign_Up_state extends State<Sign_Up>{
                       filled: true,
                       fillColor: Colors.grey.withOpacity(0.3),
                       hintText: 'Phone Number',
+                      errorText: _isContactValid ? null : 'Enter a valid contact number',
                     ),
                     controller: phonenumber_controller,
+                    onChanged: (value) {
+                      setState(() {
+                        _isContactValid = _isValidContact(value);
+                      });
+                    },
                     style: TextStyle(color: Colors.black),
 
                   ),
@@ -132,6 +153,7 @@ class Sign_Up_state extends State<Sign_Up>{
                         fillColor: Colors.grey.withOpacity(0.3),
                         hintText: 'Password',
                         prefixIcon: Icon(Icons.lock),
+                        errorText: _isPasswordValid ? null : 'Password must be at least 8 characters',
                         suffixIcon: InkWell(
                             onTap: _togglePasswordView,
                             child: Icon(isHidePassword
@@ -139,72 +161,117 @@ class Sign_Up_state extends State<Sign_Up>{
                                 : Icons.visibility))
                     ),
                     controller: password_controller,
+                    onChanged: (value) {
+                      setState(() {
+                        _isPasswordValid = value.length >= 8;
+                      });
+                    },
                     style: TextStyle(color: Colors.black),),
+
 
                 ),
               ),
-              SizedBox(height: 20,),
-              Padding(
-                padding: const EdgeInsets.only(left: 5, right: 15),
-                child: Container(
-                  child: TextField(
-                    obscureText: isHideConfirmPassword,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        filled: true,
-                        fillColor: Colors.grey.withOpacity(0.3),
-                        hintText: 'Confirm Password',
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: InkWell(
-                            onTap: _toggleConfirmPasswordView,
-                            child: Icon(isHideConfirmPassword
-                                ? Icons.visibility_off
-                                : Icons.visibility))
-                    ),
-                    controller: confirm_password_controller,
-                    style: TextStyle(color: Colors.black),),
-
-                ),
-              ),
+              // SizedBox(height: 20,),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 5, right: 15),
+              //   child: Container(
+              //     child: TextField(
+              //       obscureText: isHideConfirmPassword,
+              //       decoration: InputDecoration(
+              //           border: OutlineInputBorder(),
+              //           filled: true,
+              //           fillColor: Colors.grey.withOpacity(0.3),
+              //           hintText: 'Confirm Password',
+              //           prefixIcon: Icon(Icons.lock),
+              //           suffixIcon: InkWell(
+              //               onTap: _toggleConfirmPasswordView,
+              //               child: Icon(isHideConfirmPassword
+              //                   ? Icons.visibility_off
+              //                   : Icons.visibility))
+              //       ),
+              //       controller: confirm_password_controller,
+              //       onChanged: (value) {
+              //         setState(() {
+              //           _isPasswordValid = value.length >= 8;
+              //         });
+              //       },
+              //       style: TextStyle(color: Colors.black),),
+              //
+              //   ),
+              // ),
               SizedBox(
                 height: 70,
               ),
-              Center(
-                child:GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignUp_OTP()));
-                    // Add your login logic here
-                  },
-                  child: Container(
-                    width: 298,
-                    height: 38,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      color: Color(0xFF14223B),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Submit',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontFamily: 'Hind',
-                            fontWeight: FontWeight.w600,
-                            height: 0,
-                          ),
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (context) => SignUp_OTP()));
+              ElevatedButton(
+                onPressed: () async {
+                  // Check if all fields are valid before attempting registration
+                  if (
+                  _isEmailValid &&
+                      _isPasswordValid &&
+                      _isContactValid ) {
+                    try {
+                      // Create user with email and password
+                      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+                        email: email_controller.text,
+                        password: password_controller.text,
+                      );
+
+                      // Store additional user data in Firestore
+                      await _firestore.collection('users').doc(userCredential.user?.uid).set({
+                        'full_name': fullname_controller.text,
+                        'email': email_controller.text,
+                        'phone number': phonenumber_controller.text,
+                        'address': address_controller.text,
+                      });
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Submitted !'),
+                          duration: Duration(seconds: 1),
                         ),
-                      ],
-                    ),
+                      );
+
+                      // Navigate to the login page or any other page after successful registration
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUp_OTP()),
+                            (route) => false,
+                      );
+                    } catch (e) {
+                      // Show error message for incomplete or invalid fields
+                      print('Error : $e');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Please fill in all fields correctly.'),
+                        ),
+                      );
+                    }
+                  } else {
+                    // Handle registration errors
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('SignUp failed. Please try again.'),
+                      ),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF14223B),
+                ),
+                child: Text(
+                  'Submit                                        ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontFamily: 'Hind',
+                    fontWeight: FontWeight.w600,
+                    height: 0,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -237,6 +304,18 @@ class Sign_Up_state extends State<Sign_Up>{
         isHideConfirmPassword = true;
       }
     });
+  }
+
+  // Helper method for validating email format
+  bool _isValidEmail(String email) {
+    String emailRegex = r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$';
+    return RegExp(emailRegex).hasMatch(email);
+  }
+
+  // Helper method for validating contact number format
+  bool _isValidContact(String contact) {
+    String contactRegex = r'^\d{10}$';
+    return RegExp(contactRegex).hasMatch(contact);
   }
 
 
