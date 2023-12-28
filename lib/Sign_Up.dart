@@ -102,6 +102,8 @@ class Sign_Up_state extends State<Sign_Up>{
                 padding: const EdgeInsets.only(left: 5, right: 15),
                 child: Container(
                   child: TextField(
+                    keyboardType: TextInputType.number,
+                    maxLength: 10,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.phone),
                       border: OutlineInputBorder(),
@@ -217,7 +219,6 @@ class Sign_Up_state extends State<Sign_Up>{
                         email: email_controller.text,
                         password: password_controller.text,
                       );
-
                       // Store additional user data in Firestore
                       await _firestore.collection('users').doc(userCredential.user?.uid).set({
                         'full_name': fullname_controller.text,

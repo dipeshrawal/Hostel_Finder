@@ -5,6 +5,7 @@ import 'package:hostel_finder/Navigation_Menu.dart';
 import 'package:hostel_finder/Sign_Up.dart';
 import 'package:hostel_finder/Visitor_Dashboard.dart';
 import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class Login_Page extends StatefulWidget {
@@ -20,6 +21,7 @@ class loginpage_state extends State<Login_Page>{
   TextEditingController email_controller = TextEditingController();
   TextEditingController password_controller = TextEditingController();
   bool isHidePassword = true;
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState(){
@@ -182,10 +184,39 @@ class loginpage_state extends State<Login_Page>{
               ),
               SizedBox(height: 50,),
               TextButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NavigationMenu()));
-                  //Act when the button is pressed
+                onPressed: () async{
+                  try {
+                    //UserCredential userCredential =
+                    await _auth.signInWithEmailAndPassword(
+                      email: email_controller.text, // Assuming email is used as the username
+                      password: password_controller.text,
+                    );
+
+                    // If login is successful, navigate to the home page
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => NavigationMenu()),
+                    );
+                  } catch (e) {
+                    // Show an error message
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Login Failed'),
+                          content: Text('Invalid email or password'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog box
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  };
                 },
                 child: Text(
                   'Sign In                                     ',

@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hostel_finder/Login_Page.dart';
 import 'package:hostel_finder/Sign_Up.dart';
 
 class Navigation_Slider extends StatelessWidget {
@@ -241,7 +243,35 @@ class Navigation_Slider extends StatelessWidget {
                 letterSpacing: 0.32,
               ),
             ),
-            onTap: () => Sign_Up(),
+            onTap: () {
+              FirebaseAuth.instance.signOut().then((value){
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Sign Out'),
+                      content: Text('Do you want to Sign Out ?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close the dialog box
+                          },
+                          child: Text('No'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => Login_Page())); // Close the dialog box
+                          },
+                          child: Text('Yes'),
+                        ),
+
+                      ],
+                    );
+                  },
+                );
+              });
+            },
           ),
 
         ],

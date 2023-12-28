@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hostel_finder/Login_Page.dart';
 import 'package:hostel_finder/Sign_Up.dart';
 import 'package:hostel_finder/Welcome_Page.dart';
+import 'package:pinput/pinput.dart';
 
 
 class SignUp_OTP extends StatefulWidget {
@@ -63,7 +64,7 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
                         letterSpacing: 1.40,
                       ),
                     ),
-                    Text('9868512330',style: TextStyle(color: Color(0xFF1B1D28),
+                    Text('chchgc',style: TextStyle(color: Color(0xFF1B1D28),
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       height: 0,
@@ -87,14 +88,19 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
 
               Padding(
                 padding: const EdgeInsets.all(5),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    filled: true,
-                    fillColor: Colors.grey.withOpacity(0.2)
-                  ),
-                  controller: OTP_controller,
-                  style: TextStyle(color: Colors.black),),
+                // child: TextField(
+                //   keyboardType: TextInputType.phone,
+                //   maxLength: 6,
+                //   decoration: InputDecoration(
+                //     border: OutlineInputBorder(),
+                //     filled: true,
+                //     fillColor: Colors.grey.withOpacity(0.2)
+                //   ),
+                //   controller: OTP_controller,
+                //   style: TextStyle(color: Colors.black),),
+                child: Pinput(
+                  length: 6,
+                ),
               ),
               SizedBox(height: 40,),
               TextButton(
