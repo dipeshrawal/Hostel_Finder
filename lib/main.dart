@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hostel_finder/Login_Page.dart';
-import 'package:hostel_finder/Sign_Up.dart';
-import 'package:hostel_finder/Welcome_Page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'Opening_Page.dart';
