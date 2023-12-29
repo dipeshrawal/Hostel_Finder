@@ -103,7 +103,6 @@ class Sign_Up_state extends State<Sign_Up>{
                 child: Container(
                   child: TextField(
                     keyboardType: TextInputType.number,
-                    maxLength: 10,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.phone),
                       border: OutlineInputBorder(),
