@@ -283,9 +283,6 @@ class Sign_Up_state extends State<Sign_Up>{
             ],
           ),
         ),
-
-
-
       ),
     );
 
