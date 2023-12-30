@@ -1,17 +1,13 @@
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:hostel_finder/Login_Page.dart';
 import 'package:hostel_finder/SignUp_OTP.dart';
-import 'package:hostel_finder/Welcome_Page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class Sign_Up extends StatefulWidget {
 
-
+static String verify = "";
   @override
   State<StatefulWidget> createState() {
     return Sign_Up_state();
@@ -24,6 +20,7 @@ class Sign_Up_state extends State<Sign_Up>{
   TextEditingController phonenumber_controller = TextEditingController();
   TextEditingController address_controller = TextEditingController();
   TextEditingController password_controller = TextEditingController();
+  TextEditingController contry_code = TextEditingController();
   //TextEditingController confirm_password_controller = TextEditingController();
   bool isHidePassword = true;
   bool isHideConfirmPassword = true;
@@ -34,16 +31,17 @@ class Sign_Up_state extends State<Sign_Up>{
   bool _isEmailValid = true;
   bool _isPasswordValid = true;
   bool _isContactValid = true;
+  var mobile_number = "";
 
   @override
   void initState(){
+    contry_code.text= "+977";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    var size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
@@ -67,9 +65,7 @@ class Sign_Up_state extends State<Sign_Up>{
                         ),
                         controller: fullname_controller,
                         style: TextStyle(color: Colors.black),
-
                       ),
-
                 ),
               ),
               SizedBox(height: 20,),
@@ -113,10 +109,12 @@ class Sign_Up_state extends State<Sign_Up>{
                     ),
                     controller: phonenumber_controller,
                     onChanged: (value) {
+                      mobile_number = value;
                       setState(() {
                         _isContactValid = _isValidContact(value);
                       });
                     },
+
                     style: TextStyle(color: Colors.black),
 
                   ),
@@ -233,10 +231,20 @@ class Sign_Up_state extends State<Sign_Up>{
                         ),
                       );
 
+                      await FirebaseAuth.instance.verifyPhoneNumber(
+                        phoneNumber: '${contry_code.text+mobile_number}',
+                        verificationCompleted: (PhoneAuthCredential credential) {},
+                        verificationFailed: (FirebaseAuthException e) {},
+                        codeSent: (String verificationId, int? resendToken) {
+                          Sign_Up.verify = verificationId;
+                        },
+                        codeAutoRetrievalTimeout: (String verificationId) {},
+                      );
+
                       // Navigate to the login page or any other page after successful registration
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => SignUp_OTP()),
+                        MaterialPageRoute(builder: (context) => SignUp_OTP(getnumber: phonenumber_controller.text)),
                             (route) => false,
                       );
                     } catch (e) {
@@ -295,16 +303,16 @@ class Sign_Up_state extends State<Sign_Up>{
     });
   }
 
-  void _toggleConfirmPasswordView(){
-
-    setState(() {
-      if(isHideConfirmPassword== true){
-        isHideConfirmPassword = false;
-      }else{
-        isHideConfirmPassword = true;
-      }
-    });
-  }
+  // void _toggleConfirmPasswordView(){
+  //
+  //   setState(() {
+  //     if(isHideConfirmPassword== true){
+  //       isHideConfirmPassword = false;
+  //     }else{
+  //       isHideConfirmPassword = true;
+  //     }
+  //   });
+  // }
 
   // Helper method for validating email format
   bool _isValidEmail(String email) {

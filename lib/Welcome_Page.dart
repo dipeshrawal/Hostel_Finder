@@ -124,9 +124,11 @@ class welcomepage_state extends State<Welcome_Page>{
                   ),
               ),
               Positioned(
+                  left: 0,
+                  right: 0,
                   bottom: 150,
-                  left: size.width/15,
-                  child: Center(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
                     child: TextButton(
                       onPressed: () {
                         Navigator.push(context,
@@ -148,7 +150,6 @@ class welcomepage_state extends State<Welcome_Page>{
                         backgroundColor: Color(0xFF14223B),
                       ),
                     ),
-
                   ) ),
             ]
         ),
