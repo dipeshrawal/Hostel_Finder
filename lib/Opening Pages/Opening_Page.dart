@@ -2,7 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hostel_finder/Welcome_Page.dart';
+import 'package:hostel_finder/Opening Pages/Welcome_Page.dart';
 
 
 class Opening_Page extends StatefulWidget {

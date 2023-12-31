@@ -1,11 +1,7 @@
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:hostel_finder/Login_Page.dart';
-import 'package:hostel_finder/Sign_Up.dart';
-import 'package:hostel_finder/Welcome_Page.dart';
-
+import 'package:hostel_finder/Forget%20Password/Forget_Password.dart';
+import 'package:hostel_finder/Forget%20Password/Reset_Password.dart';
 
 class Send_SMS extends StatefulWidget {
 
@@ -120,6 +116,10 @@ class Send_SMS_state extends State<Send_SMS>{
               TextButton(
                 onPressed: () {
                   //Act when the button is pressed
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Reset_Password()),
+                  );
                 },
                 child: Text(
                   ' Preceed to Send SMS                  ',

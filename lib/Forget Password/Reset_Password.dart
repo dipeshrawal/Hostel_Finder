@@ -1,28 +1,22 @@
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hostel_finder/Login_Page.dart';
-import 'package:hostel_finder/Sign_Up.dart';
-import 'package:hostel_finder/Visitor_Dashboard.dart';
-import 'package:hostel_finder/Welcome_Page.dart';
+import 'package:hostel_finder/Forget%20Password/Change_Password.dart';
+import 'package:hostel_finder/Forget%20Password/Forget_Password.dart';
 import 'package:pinput/pinput.dart';
 
 
-class SignUp_OTP extends StatefulWidget {
-  String getnumber;
-
-  SignUp_OTP({ required this.getnumber});
+class Reset_Password extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return SignUp_OTP_state();
+    return reset_password_state();
   }
 }
 
-class SignUp_OTP_state extends State<SignUp_OTP>{
+class reset_password_state extends State<Reset_Password>{
 
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  TextEditingController OTP_controller = TextEditingController();
+  //final FirebaseAuth auth = FirebaseAuth.instance;
+  TextEditingController reset_OTP_controller = TextEditingController();
 
   @override
   void initState(){
@@ -33,10 +27,11 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
   Widget build(BuildContext context) {
     // TODO: implement build
     var size = MediaQuery.of(context).size;
-    var sms_code="";
+    var code="";
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset('assets/images/header.png', height: 25, width: 270,),
+        automaticallyImplyLeading: false,
+        title: Center(child: Image.asset('assets/images/header.png', height: 25, width: 270,)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -50,7 +45,7 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
               Container(
                 child: Row(
                   children: [
-                    Text('Verify Mobile Number', style: TextStyle(fontSize: 24, color: Colors.purple),),
+                    Text('Reset Password OTP', style: TextStyle(fontSize: 24, color: Colors.purple),),
                   ],
                 ),
               ),
@@ -59,7 +54,7 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
                 padding: const EdgeInsets.only(left:5),
                 child: Row(
                   children: [
-                    Text('OTP sent to :  ',
+                    Text('Reset OTP for: ',
                       textAlign:TextAlign.start,
                       style: TextStyle(
                         color: Color(0xFF1B1D28),
@@ -69,7 +64,7 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
                         letterSpacing: 1.40,
                       ),
                     ),
-                    Text('+977  ${widget.getnumber}',style: TextStyle(color: Color(0xFF1B1D28),
+                    Text('+977 ${Forget_Password.reset_number}',style: TextStyle(color: Color(0xFF1B1D28),
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       height: 0,
@@ -93,21 +88,11 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
 
               Padding(
                 padding: const EdgeInsets.all(5),
-                // child: TextField(
-                //   keyboardType: TextInputType.phone,
-                //   maxLength: 6,
-                //   decoration: InputDecoration(
-                //     border: OutlineInputBorder(),
-                //     filled: true,
-                //     fillColor: Colors.grey.withOpacity(0.2)
-                //   ),
-                //   controller: OTP_controller,
-                //   style: TextStyle(color: Colors.black),),
                 child: Pinput(
                   length: 6,
                   showCursor: true,
                   onChanged: (value){
-                    sms_code = value;
+                    code = value;
 
                   },
                 ),
@@ -115,40 +100,45 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
               SizedBox(height: 40,),
               TextButton(
                 onPressed: () async{
-                  try{
-                    // Create a PhoneAuthCredential with the code
-                    PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: Sign_Up.verify, smsCode: sms_code);
-
-                    // Sign the user in (or link) with the credential
-                    await auth.signInWithCredential(credential);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => Visitor_Dashboard()),
-                    );
-                  }
-                  catch (e) {
-                    // Show an error message
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('SMS OTP'),
-                          content: Text('Invalid OTP'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop(); // Close the dialog box
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Change_Password()),
                         );
-                      },
-                    );
-                  };
+                  // try{
+                  //   // Create a PhoneAuthCredential with the code
+                  //   PhoneAuthCredential creds = PhoneAuthProvider.credential(verificationId: Sign_Up.verify, smsCode: code);
+                  //   // Sign the user in (or link) with the credential
+                  //   //User? user = (await auth.signInWithCredential(creds)).user;
+                  //   Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => Visitor_Dashboard()),
+                  //   );
+                  //
+                  // }
+                  // catch (e) {
+                  //   // Show an error message
+                  //   // showDialog(
+                  //   //   context: context,
+                  //   //   builder: (BuildContext context) {
+                  //   //     return AlertDialog(
+                  //   //       title: Text('SMS OTP'),
+                  //   //       content: Text('Invalid OTP'),
+                  //   //       actions: [
+                  //   //         TextButton(
+                  //   //           onPressed: () {
+                  //   //             Navigator.of(context).pop(); // Close the dialog box
+                  //   //           },
+                  //   //           child: Text('OK'),
+                  //   //         ),
+                  //   //       ],
+                  //   //     );
+                  //   //   },
+                  //   // );
+                  //   print("wrong otp");
+                  // };
                 },
                 child: Text(
-                  ' Verify                                     ',
+                  ' Recover                                     ',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,

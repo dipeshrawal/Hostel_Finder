@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:hostel_finder/Navigation_Slider.dart';
+import 'package:hostel_finder/Navigation Bar/Navigation_Slider.dart';
 
 
 

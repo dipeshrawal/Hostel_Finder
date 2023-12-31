@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:hostel_finder/SignUp_OTP.dart';
+import 'package:hostel_finder/Signup Auth/SignUp_OTP.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -32,6 +32,7 @@ class Sign_Up_state extends State<Sign_Up>{
   bool _isPasswordValid = true;
   bool _isContactValid = true;
   var mobile_number = "";
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   void initState(){
@@ -232,20 +233,23 @@ class Sign_Up_state extends State<Sign_Up>{
                       );
 
                       await FirebaseAuth.instance.verifyPhoneNumber(
-                        phoneNumber: '${contry_code.text+mobile_number}',
-                        verificationCompleted: (PhoneAuthCredential credential) {},
-                        verificationFailed: (FirebaseAuthException e) {},
+                        phoneNumber: '${contry_code.text + mobile_number}',
+                        verificationCompleted: (PhoneAuthCredential credential) async{
+                          await auth.signInWithCredential(credential);
+                        },
+                        verificationFailed: (FirebaseAuthException e) {
+
+                        },
                         codeSent: (String verificationId, int? resendToken) {
                           Sign_Up.verify = verificationId;
+                          // Navigate to the login page or any other page after successful registration
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => SignUp_OTP(getnumber: phonenumber_controller.text)),
+                                (route) => false,
+                          );
                         },
                         codeAutoRetrievalTimeout: (String verificationId) {},
-                      );
-
-                      // Navigate to the login page or any other page after successful registration
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignUp_OTP(getnumber: phonenumber_controller.text)),
-                            (route) => false,
                       );
                     } catch (e) {
                       // Show error message for incomplete or invalid fields

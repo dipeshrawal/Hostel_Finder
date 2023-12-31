@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hostel_finder/Login_Page.dart';
-import 'package:hostel_finder/Sign_Up.dart';
+import 'package:hostel_finder/Signup Auth/Sign_Up.dart';
 
 class Navigation_Slider extends StatelessWidget {
   const Navigation_Slider({super.key});

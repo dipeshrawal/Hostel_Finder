@@ -1,23 +1,20 @@
 
-
-
 import 'package:flutter/material.dart';
-import 'package:hostel_finder/Forget%20Password/Send_SMS.dart';
+import 'package:hostel_finder/Login_Page.dart';
 
-
-
-class Forget_Password extends StatefulWidget {
-  static var reset_number="" ;
+class Edit_Profile extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return Forget_Password_state();
+    return Edit_Profile_State();
   }
 }
 
-class Forget_Password_state extends State<Forget_Password>{
-  TextEditingController number_controller = TextEditingController();
+class Edit_Profile_State extends State<Edit_Profile>{
+  TextEditingController username_controller = TextEditingController();
 
+
+  bool _isPasswordValid = true;
 
   @override
   void initState(){
@@ -27,27 +24,25 @@ class Forget_Password_state extends State<Forget_Password>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    var size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/images/header.png', height: 25, width: 270,),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 50, right: 20),
+          padding: const EdgeInsets.all(30),
           child: Column(
             children: [
-              SizedBox(height: 40,),
               Row(
                 children: [
                   Text(
-                    'Forget Password',
+                    'Edit Username',
                     style: TextStyle(
                       color: Color(0xFF14223B),
                       fontSize: 28,
                       fontFamily: 'Hind Jalandhar',
                       fontWeight: FontWeight.w700,
-                      height: 0,
                     ),
                   ),
                 ],
@@ -56,64 +51,65 @@ class Forget_Password_state extends State<Forget_Password>{
               Row(
                 children: [
                   Text(
-                    'Recover Your Hostel Finder Password',
+                    'Change Your Hostel Finder Username',
                     style: TextStyle(
                       color: Color(0xFF14223B),
-                      fontSize: 18,
-                      fontFamily: 'Hind Jalandhar',
-                      fontWeight: FontWeight.w300,
-                      height: 0,
-                    ),maxLines: 2,
+                      fontSize: 19,
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 30,),
-              TextField(
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.phone),
-                  border: OutlineInputBorder(),
-                  filled: true,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  hintText: 'Enter your Phone Number',
+              SizedBox(height: 50,),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12), // Adding padding inside the container
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8), // Rounded corners for the container
+                  color: Colors.grey.withOpacity(0.2),
                 ),
-                controller: number_controller,
-                style: TextStyle(color: Colors.black),
-                onChanged: (value){
-                  Forget_Password.reset_number=value;
-                },
-
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none, // Remove the default border
+                    hintText: 'Enter your new username', // Adding hint text
+                    hintStyle: TextStyle(color: Colors.grey, fontSize: 15), // Hint text color
+                  ),
+                  controller: username_controller,
+                  onChanged: (value) {
+                    setState(() {
+                    });
+                  },
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
-              SizedBox(height: 60,),
+              SizedBox(height: 70,),
               TextButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Send_SMS()));
                   //Act when the button is pressed
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login_Page()),
+                  );
                 },
                 child: Text(
-                  ' Recover                                     ',
+                  ' Update                                        ',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 28,
+                    fontSize: 24,
                     fontFamily: 'Hind',
                     fontWeight: FontWeight.w700,
                     height: 0,
                   ),
                 ),
-
                 style: TextButton.styleFrom(
                   backgroundColor: Color(0xFF14223B),
                 ),
               ),
             ],
           ),
-
-
-
         ),
       ),
     );
-
   }
+
+
 }

@@ -42,6 +42,7 @@ dependencies:
   icons_plus: ^4.0.0
   get: ^4.6.6
   pinput:
+  image_picker:
 
 dev_dependencies:
   flutter_test:

@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:hostel_finder/Forget%20Password/Forget_Password.dart';
-import 'package:hostel_finder/Navigation_Menu.dart';
-import 'package:hostel_finder/Sign_Up.dart';
-import 'package:hostel_finder/Visitor_Dashboard.dart';
+import 'package:hostel_finder/Navigation Bar/Navigation_Menu.dart';
+import 'package:hostel_finder/Signup Auth/Sign_Up.dart';
+import 'package:hostel_finder/Screens/Users/Visitor_Dashboard.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -191,7 +191,6 @@ class loginpage_state extends State<Login_Page>{
                       email: email_controller.text, // Assuming email is used as the username
                       password: password_controller.text,
                     );
-
                     // If login is successful, navigate to the home page
                     Navigator.pushReplacement(
                       context,
