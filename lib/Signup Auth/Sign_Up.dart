@@ -217,6 +217,7 @@ class Sign_Up_state extends State<Sign_Up>{
                         email: email_controller.text,
                         password: password_controller.text,
                       );
+
                       // Store additional user data in Firestore
                       await _firestore.collection('users').doc(userCredential.user?.uid).set({
                         'full_name': fullname_controller.text,
@@ -238,7 +239,6 @@ class Sign_Up_state extends State<Sign_Up>{
                           await auth.signInWithCredential(credential);
                         },
                         verificationFailed: (FirebaseAuthException e) {
-
                         },
                         codeSent: (String verificationId, int? resendToken) {
                           Sign_Up.verify = verificationId;

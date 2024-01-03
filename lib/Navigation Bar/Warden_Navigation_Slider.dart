@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostel_finder/Login_Page.dart';
+import 'package:hostel_finder/Screens/Warden/Add_Student.dart';
 import 'package:hostel_finder/Screens/Warden/Register_Hostel.dart';
 import 'package:hostel_finder/Screens/Warden/Warden_Login.dart';
 import 'package:hostel_finder/Signup Auth/Sign_Up.dart';
 
-class Navigation_Slider extends StatelessWidget {
-  const Navigation_Slider({super.key});
-
+class Warden_Navigation_Slider extends StatelessWidget {
+  const Warden_Navigation_Slider({super.key});
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -15,39 +15,6 @@ class Navigation_Slider extends StatelessWidget {
       child: ListView(
         children: [
           SizedBox(height: 30,),
-          // ListTile(
-          //   leading: Container(
-          //       height:40,
-          //       width:40,
-          //     decoration: ShapeDecoration(
-          //       color: Color(0xFFFDFDFD),
-          //       shape: RoundedRectangleBorder(
-          //         side: BorderSide(width: 0.50, color: Color(0xFFE3E3E7)),
-          //         borderRadius: BorderRadius.circular(10),
-          //       ),
-          //       shadows: [
-          //         BoxShadow(
-          //           color: Color(0x26454545),
-          //           blurRadius: 16,
-          //           offset: Offset(0, 4),
-          //           spreadRadius: 0,
-          //         )
-          //       ],
-          //     ),
-          //       child: Icon(Icons.person,size: 30),),
-          //   title: Text(
-          //     'Student Login',
-          //     style: TextStyle(
-          //       color: Color(0xFF1A1E25),
-          //       fontSize: 16,
-          //       fontFamily: 'Hind',
-          //       fontWeight: FontWeight.w500,
-          //       height: 0.06,
-          //       letterSpacing: 0.32,
-          //     ),
-          //   ),
-          //   onTap: () => Sign_Up(),
-          // ),
           ListTile(
             leading: Container(
               height:40,
@@ -69,7 +36,7 @@ class Navigation_Slider extends StatelessWidget {
               ),
               child: Icon(Icons.person,size: 30),),
             title: Text(
-              'Hostel Warden Login ',
+              'Student Details',
               style: TextStyle(
                 color: Color(0xFF1A1E25),
                 fontSize: 16,
@@ -80,45 +47,45 @@ class Navigation_Slider extends StatelessWidget {
               ),
             ),
             onTap: (){
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Warden_Login()));
+            //   Navigator.push(context,
+            //       MaterialPageRoute(builder: (context) => Warden_Login()));
             },
           ),
           ListTile(
-            leading: Container(
-              height:40,
-              width:40,
-              decoration: ShapeDecoration(
-                color: Color(0xFFFDFDFD),
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50, color: Color(0xFFE3E3E7)),
-                  borderRadius: BorderRadius.circular(10),
+              leading: Container(
+                height:40,
+                width:40,
+                decoration: ShapeDecoration(
+                  color: Color(0xFFFDFDFD),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 0.50, color: Color(0xFFE3E3E7)),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0x26454545),
+                      blurRadius: 16,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    )
+                  ],
                 ),
-                shadows: [
-                  BoxShadow(
-                    color: Color(0x26454545),
-                    blurRadius: 16,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  )
-                ],
+                child: Icon(Icons.add_reaction_outlined,size: 30),),
+              title: Text(
+                'Add Student',
+                style: TextStyle(
+                  color: Color(0xFF1A1E25),
+                  fontSize: 16,
+                  fontFamily: 'Hind',
+                  fontWeight: FontWeight.w500,
+                  height: 0.06,
+                  letterSpacing: 0.32,
+                ),
               ),
-              child: Icon(Icons.location_city_outlined,size: 30),),
-            title: Text(
-              'Register Your Hostel',
-              style: TextStyle(
-                color: Color(0xFF1A1E25),
-                fontSize: 16,
-                fontFamily: 'Hind',
-                fontWeight: FontWeight.w500,
-                height: 0.06,
-                letterSpacing: 0.32,
-              ),
-            ),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Register_Hostel()));
-            }
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Add_Student()));
+              }
           ),
           ListTile(
             leading: Container(

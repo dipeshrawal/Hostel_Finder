@@ -43,6 +43,8 @@ dependencies:
   get: ^4.6.6
   pinput:
   image_picker:
+  dotted_border:
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

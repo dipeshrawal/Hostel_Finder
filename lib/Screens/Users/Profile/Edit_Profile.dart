@@ -84,10 +84,10 @@ class Edit_Profile_State extends State<Edit_Profile>{
               TextButton(
                 onPressed: () {
                   //Act when the button is pressed
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Login_Page()),
-                  );
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => Login_Page()),
+                  // );
                 },
                 child: Text(
                   ' Update                                        ',

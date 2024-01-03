@@ -109,31 +109,31 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
                     PhoneAuthCredential creds = PhoneAuthProvider.credential(verificationId: Sign_Up.verify, smsCode: code);
                     // Sign the user in (or link) with the credential
                     User? user = (await auth.signInWithCredential(creds)).user;
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Visitor_Dashboard()),
-                      );
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Visitor_Dashboard()),
+                    );
 
                   }
                   catch (e) {
-                    // Show an error message
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (BuildContext context) {
-                    //     return AlertDialog(
-                    //       title: Text('SMS OTP'),
-                    //       content: Text('Invalid OTP'),
-                    //       actions: [
-                    //         TextButton(
-                    //           onPressed: () {
-                    //             Navigator.of(context).pop(); // Close the dialog box
-                    //           },
-                    //           child: Text('OK'),
-                    //         ),
-                    //       ],
-                    //     );
-                    //   },
-                    // );
+                    //Show an error message
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('SMS OTP'),
+                          content: Text('Invalid OTP'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog box
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                     print("wrong otp");
                   };
                 },
