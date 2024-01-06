@@ -33,7 +33,7 @@ class _dataState extends State<data> {
                 padding: EdgeInsets.only(top: 20),
                 physics: const  BouncingScrollPhysics(),
                 itemBuilder:(context, index){
-                  return Hostel_Card(hsward: list[index],);
+                  return Hostel_Card(hsward: list[index], );
                 } );
         },
       ),
