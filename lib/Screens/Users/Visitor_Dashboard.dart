@@ -67,9 +67,8 @@ class Visitor_Dashboard_state extends State<Visitor_Dashboard>{
 
               SizedBox(height: 20,),
               Container(
-                height: size.height/3,
+                height: size.height/2,
                 width: size.width,
-                color: Colors.red,
                 child: data(),
               ),
             ],
