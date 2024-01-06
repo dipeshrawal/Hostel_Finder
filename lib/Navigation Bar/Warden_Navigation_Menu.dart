@@ -40,6 +40,6 @@ class Warden_NavigationMenu extends StatelessWidget {
 class Warden_NavigationController extends GetxController{
   final Rx<int> selectedIndex = 0.obs;
 
-  final screens = [Warden_Dashboard(), Warden_Chats(), Container(color: Colors.yellow), Warden_Profile_Page()];
+  final screens = [AddHostelDetailsPage(), Warden_Chats(), Container(color: Colors.yellow), Warden_Profile_Page()];
 
 }
