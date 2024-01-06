@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hostel_finder/Screens/Users/Profile_Page.dart';
 import 'package:hostel_finder/Screens/Users/Visitor_Dashboard.dart';
+import 'package:hostel_finder/Screens/Warden/Chat/Chats.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class NavigationMenu extends StatelessWidget {
@@ -36,6 +37,6 @@ class NavigationMenu extends StatelessWidget {
 class NavigationController extends GetxController{
   final Rx<int> selectedIndex = 0.obs;
 
-  final screens = [Visitor_Dashboard(), Container(color: Colors.red), Container(color: Colors.yellow), Profile_Page()];
+  final screens = [Visitor_Dashboard(), Chats(), Container(color: Colors.yellow), Profile_Page()];
 
 }

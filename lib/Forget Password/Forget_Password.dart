@@ -63,7 +63,7 @@ class Forget_Password_state extends State<Forget_Password>{
                       fontFamily: 'Hind Jalandhar',
                       fontWeight: FontWeight.w300,
                       height: 0,
-                    ),maxLines: 2,
+                    ),maxLines: 1,
                   ),
                 ],
               ),

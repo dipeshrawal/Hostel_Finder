@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:hostel_finder/Hostel_data/data.dart';
 import 'package:hostel_finder/Navigation Bar/Navigation_Slider.dart';
 
 
@@ -30,7 +31,7 @@ class Visitor_Dashboard_state extends State<Visitor_Dashboard>{
       appBar: AppBar(
         title: Image.asset('assets/images/header.png', height: 25, width: 270,),
       ),
-      body: SingleChildScrollView(
+      body: Container(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 15),
           child: Column(
@@ -65,6 +66,12 @@ class Visitor_Dashboard_state extends State<Visitor_Dashboard>{
               ),
 
               SizedBox(height: 20,),
+              Container(
+                height: size.height/3,
+                width: size.width,
+                color: Colors.red,
+                child: data(),
+              ),
             ],
           ),
         ),

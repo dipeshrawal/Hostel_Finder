@@ -213,18 +213,23 @@ class Sign_Up_state extends State<Sign_Up>{
                       _isContactValid ) {
                     try {
                       // Create user with email and password
-                      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+                      User? user = (await _auth.createUserWithEmailAndPassword(
                         email: email_controller.text,
                         password: password_controller.text,
-                      );
+                      )).user;
 
-                      // Store additional user data in Firestore
-                      await _firestore.collection('users').doc(userCredential.user?.uid).set({
-                        'full_name': fullname_controller.text,
-                        'email': email_controller.text,
-                        'phone number': phonenumber_controller.text,
-                        'address': address_controller.text,
-                      });
+                      if(user!= null){
+                        // Store additional user data in Firestore
+                        await _firestore.collection('users').doc(_auth.currentUser!.uid).set({
+                          'full_name': fullname_controller.text,
+                          'email': email_controller.text,
+                          'phone number': phonenumber_controller.text,
+                          'address': address_controller.text,
+                          'status':"Offline",
+                          'uid' : _auth.currentUser?.uid,
+                        });
+                      }
+                      user?.updateProfile(displayName: fullname_controller.text);
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -235,12 +240,12 @@ class Sign_Up_state extends State<Sign_Up>{
 
                       await FirebaseAuth.instance.verifyPhoneNumber(
                         phoneNumber: '${contry_code.text + mobile_number}',
-                        verificationCompleted: (PhoneAuthCredential credential) async{
+                        verificationCompleted: (credential) async{
                           await auth.signInWithCredential(credential);
                         },
                         verificationFailed: (FirebaseAuthException e) {
                         },
-                        codeSent: (String verificationId, int? resendToken) {
+                        codeSent: (verificationId,resendToken) {
                           Sign_Up.verify = verificationId;
                           // Navigate to the login page or any other page after successful registration
                           Navigator.pushAndRemoveUntil(

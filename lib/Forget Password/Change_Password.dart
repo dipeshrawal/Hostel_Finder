@@ -58,6 +58,7 @@ class Change_Password_State extends State<Change_Password>{
                       color: Color(0xFF14223B),
                       fontSize: 20,
                     ),
+                    maxLines: 1,
                   ),
                 ],
               ),

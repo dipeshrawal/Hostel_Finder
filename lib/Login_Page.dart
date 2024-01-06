@@ -191,6 +191,7 @@ class loginpage_state extends State<Login_Page>{
                       email: email_controller.text, // Assuming email is used as the username
                       password: password_controller.text,
                     );
+
                     // If login is successful, navigate to the home page
                     Navigator.pushReplacement(
                       context,

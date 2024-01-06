@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hostel_finder/Screens/Users/Profile_Page.dart';
 import 'package:hostel_finder/Screens/Users/Visitor_Dashboard.dart';
+import 'package:hostel_finder/Screens/Warden/Chat/Chats.dart';
+import 'package:hostel_finder/Screens/Warden/Chat/Warden_Chats.dart';
 import 'package:hostel_finder/Screens/Warden/Warden_Dashboard.dart';
 import 'package:hostel_finder/Screens/Warden/Warden_Profile_Page.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -38,6 +40,6 @@ class Warden_NavigationMenu extends StatelessWidget {
 class Warden_NavigationController extends GetxController{
   final Rx<int> selectedIndex = 0.obs;
 
-  final screens = [Warden_Dashboard(), Container(color: Colors.red), Container(color: Colors.yellow), Warden_Profile_Page()];
+  final screens = [Warden_Dashboard(), Warden_Chats(), Container(color: Colors.yellow), Warden_Profile_Page()];
 
 }

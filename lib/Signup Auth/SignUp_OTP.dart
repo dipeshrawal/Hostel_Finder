@@ -1,6 +1,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hostel_finder/Navigation%20Bar/Navigation_Menu.dart';
 import 'package:hostel_finder/Signup Auth/Sign_Up.dart';
 import 'package:hostel_finder/Screens/Users/Visitor_Dashboard.dart';
 import 'package:pinput/pinput.dart';
@@ -111,7 +112,7 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
                     User? user = (await auth.signInWithCredential(creds)).user;
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => Visitor_Dashboard()),
+                      MaterialPageRoute(builder: (context) => NavigationMenu()),
                     );
 
                   }

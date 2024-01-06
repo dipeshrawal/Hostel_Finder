@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hostel_finder/Screens/Users/Profile_Page.dart';
+import 'package:hostel_finder/Screens/Warden/Chat/Chats.dart';
+import 'package:hostel_finder/Screens/Warden/Register_Hostel.dart';
 import 'firebase_options.dart';
 import 'Opening Pages/Opening_Page.dart';
 

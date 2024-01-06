@@ -2,8 +2,10 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hostel_finder/Hostel_data/Add_Signup_Image.dart';
 import 'package:hostel_finder/Signup%20Auth/SignUp_OTP.dart';
 import 'package:hostel_finder/utils.dart';
 import 'package:image_picker/image_picker.dart';
@@ -33,6 +35,12 @@ class Register_Hostel_state extends State<Register_Hostel>{
       _panvat_image = img2;
     });
   }
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Save_Image() async{
+    String resp = await Add_Signup_Image().save_warden_signup_images(file1: _citizenship_image!, file2: _panvat_image!);
+  }
 
   TextEditingController fullname_controller = TextEditingController();
   TextEditingController phonenumber_controller = TextEditingController();
@@ -47,10 +55,7 @@ class Register_Hostel_state extends State<Register_Hostel>{
   TextEditingController contry_code = TextEditingController();
   bool isHidePassword = true;
   String selectedHostelTypeText= "";
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Validation flag for each field
   bool _isEmailValid = true;
@@ -253,6 +258,11 @@ class Register_Hostel_state extends State<Register_Hostel>{
                             image: MemoryImage(_citizenship_image!),
                           ),
                         ),
+                        child: IconButton(
+                          alignment: Alignment.bottomRight,
+                          onPressed: selectImageofCitizenship,
+                          icon:Icon(Icons.file_upload_outlined),
+                        ),
                       ),
                     )
                         :
@@ -271,7 +281,7 @@ class Register_Hostel_state extends State<Register_Hostel>{
                               'Upload Citizenship Photo',
                               style: TextStyle(
                                 color: Color(0xFF1A1E25),
-                                fontSize: 16,
+                                fontSize: 15,
                                 fontFamily: 'Hind',
                                 fontWeight: FontWeight.w500,
                                 height: 0.06,
@@ -471,6 +481,11 @@ class Register_Hostel_state extends State<Register_Hostel>{
                             image: MemoryImage(_panvat_image!),
                           ),
                         ),
+                        child: IconButton(
+                          alignment: Alignment.bottomRight,
+                          onPressed: selectImageofPANVAT,
+                          icon:Icon(Icons.file_upload_outlined),
+                        ),
                       ),
                     )
                     :
@@ -495,6 +510,7 @@ class Register_Hostel_state extends State<Register_Hostel>{
                                 height: 0.06,
                                 letterSpacing: 0.32,
                               ),
+                              maxLines: 1,
                             ),
                             onTap: selectImageofPANVAT
                         ),
@@ -507,19 +523,20 @@ class Register_Hostel_state extends State<Register_Hostel>{
               SizedBox(height: 50,),
               ElevatedButton(
                 onPressed: () async {
+
                   // Check if all fields are valid before attempting registration
                   if (
                   _isEmailValid &&
                       _isPasswordValid &&
                       _isContactValid ) {
                     try {
-                      // Create user with email and password
-                      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+                       // Create user with email and password
+                      User? user = (await _auth.createUserWithEmailAndPassword(
                         email: email_controller.text,
                         password: password_controller.text,
-                      );
+                      )).user;
                       // Store additional user data in Firestore
-                      await _firestore.collection('warden').doc(userCredential.user?.uid).set({
+                      await _firestore.collection('warden').doc(_auth.currentUser!.uid).set({
                         'full_name': fullname_controller.text,
                         'phone number': phonenumber_controller.text,
                         'email': email_controller.text,
@@ -529,7 +546,13 @@ class Register_Hostel_state extends State<Register_Hostel>{
                         'Hostel_registration_Number': registrationnumber_controller.text,
                         'Hostel_Register_Date': registerdate_controller.text,
                         'Hostel_Type': selectedHostelTypeText,
+                        'Warden_Citizensgip' : " ",
+                        'Hostel_Pan' : " ",
+                        'status': "Unavailable,",
+                        'warden_id': _auth.currentUser?.uid,
                       });
+                      user?.updateProfile(displayName: fullname_controller.text);
+                      Save_Image;
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -538,25 +561,25 @@ class Register_Hostel_state extends State<Register_Hostel>{
                         ),
                       );
 
-                      await FirebaseAuth.instance.verifyPhoneNumber(
-                        phoneNumber: '${contry_code.text + mobile_number}',
-                        verificationCompleted: (PhoneAuthCredential credential) async{
-                          await auth.signInWithCredential(credential);
-                        },
-                        verificationFailed: (FirebaseAuthException e) {
-
-                        },
-                        codeSent: (String verificationId, int? resendToken) {
-                          Register_Hostel.verify = verificationId;
-                          // Navigate to the login page or any other page after successful registration
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (context) => SignUp_OTP(getnumber: phonenumber_controller.text)),
-                                (route) => false,
-                          );
-                        },
-                        codeAutoRetrievalTimeout: (String verificationId) {},
-                      );
+                      // await FirebaseAuth.instance.verifyPhoneNumber(
+                      //   phoneNumber: '${contry_code.text + mobile_number}',
+                      //   verificationCompleted: (PhoneAuthCredential credential) async{
+                      //     await auth.signInWithCredential(credential);
+                      //   },
+                      //   verificationFailed: (FirebaseAuthException e) {
+                      //
+                      //   },
+                      //   codeSent: (String verificationId, int? resendToken) {
+                      //     Register_Hostel.verify = verificationId;
+                      //     // Navigate to the login page or any other page after successful registration
+                      //     Navigator.pushAndRemoveUntil(
+                      //       context,
+                      //       MaterialPageRoute(builder: (context) => SignUp_OTP(getnumber: phonenumber_controller.text)),
+                      //           (route) => false,
+                      //     );
+                      //   },
+                      //   codeAutoRetrievalTimeout: (String verificationId) {},
+                      // );
                     } catch (e) {
                       // Show error message for incomplete or invalid fields
                       print('Error : $e');
