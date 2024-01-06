@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hostel_finder/About_App/Aboutus.dart';
+import 'package:hostel_finder/About_App/Feedback.dart';
+import 'package:hostel_finder/About_App/Help_Support.dart';
 import 'package:hostel_finder/Login_Page.dart';
 import 'package:hostel_finder/Screens/Warden/Add_Student.dart';
 import 'package:hostel_finder/Screens/Warden/Register_Hostel.dart';
@@ -118,7 +121,10 @@ class Warden_Navigation_Slider extends StatelessWidget {
                 letterSpacing: 0.32,
               ),
             ),
-            onTap: () => Sign_Up(),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HelpAndSupportPage()));
+              }
           ),
           ListTile(
             leading: Container(
@@ -151,7 +157,10 @@ class Warden_Navigation_Slider extends StatelessWidget {
                 letterSpacing: 0.32,
               ),
             ),
-            onTap: () => Sign_Up(),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FeedbackForm()));
+              }
           ),
           ListTile(
             leading: Container(
@@ -184,7 +193,10 @@ class Warden_Navigation_Slider extends StatelessWidget {
                 letterSpacing: 0.32,
               ),
             ),
-            onTap: () => Sign_Up(),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AboutUsPage()));
+              }
           ),
           ListTile(
             leading: Container(
