@@ -3,15 +3,15 @@ import 'package:hostel_finder/Login_Page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Edit_Profile extends StatefulWidget {
+class Warden_EditProfile extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return Edit_Profile_State();
+    return Warden_EditProfile_State();
   }
 }
 
-class Edit_Profile_State extends State<Edit_Profile>{
+class Warden_EditProfile_State extends State<Warden_EditProfile>{
   TextEditingController fullname_controller = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -28,7 +28,7 @@ class Edit_Profile_State extends State<Edit_Profile>{
     User? user = _auth.currentUser;
     if(user != null){
       try {
-        await _firestore.collection('users').doc(user.uid).update({
+        await _firestore.collection('warden').doc(user.uid).update({
           'full_name': fullname_controller.text,
         });
 

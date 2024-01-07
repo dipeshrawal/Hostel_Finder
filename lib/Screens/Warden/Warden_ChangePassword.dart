@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hostel_finder/Login_Page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hostel_finder/Screens/Warden/Warden_Login.dart';
 
 
-class Change_Password_Profile extends StatefulWidget {
+class Warden_ChangePassword extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return Change_Password_Profile_State();
+    return Warden_ChangePassword_State();
   }
 }
 
-class Change_Password_Profile_State extends State<Change_Password_Profile>{
+class Warden_ChangePassword_State extends State<Warden_ChangePassword>{
   TextEditingController password_controller = TextEditingController();
   TextEditingController confirm_password_controller = TextEditingController();
   TextEditingController old_password_controller = TextEditingController();
@@ -76,7 +77,7 @@ class Change_Password_Profile_State extends State<Change_Password_Profile>{
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Login_Page()),
+          MaterialPageRoute(builder: (context) => Warden_Login()),
         );
       }
     } catch (e) {

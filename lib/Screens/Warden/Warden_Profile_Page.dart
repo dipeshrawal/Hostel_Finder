@@ -1,12 +1,14 @@
-
 import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostel_finder/Login_Page.dart';
 import 'package:hostel_finder/Screens/Users/Profile/Change_Password_Profile.dart';
 import 'package:hostel_finder/Screens/Users/Profile/Edit_Profile.dart';
+import 'package:hostel_finder/Screens/Warden/Warden_ChangePassword.dart';
+import 'package:hostel_finder/Screens/Warden/Warden_EditProfile.dart';
 import 'package:hostel_finder/utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class Warden_Profile_Page extends StatefulWidget {
@@ -18,6 +20,9 @@ class Warden_Profile_Page extends StatefulWidget {
 }
 class Warden_Profile_Page_state extends State<Warden_Profile_Page>{
   Uint8List? _image;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  User? _user; // To store logged-in user details
+  String? fullName; // To store the user's full name
 
   void selectImage() async{
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -28,7 +33,61 @@ class Warden_Profile_Page_state extends State<Warden_Profile_Page>{
   @override
   void initState(){
     super.initState();
+    _user = _auth.currentUser; // Fetch current user on initialization
+
+    // Load user details if available
+    if (_user != null) {
+      _loadUserDetails();
+    }
   }
+
+  Future<String?> fetchFullNameFromDatabase(String uid) async {
+    DocumentSnapshot<Map<String, dynamic>> snapshot =
+    await FirebaseFirestore.instance.collection('warden').doc(uid).get();
+
+    if (snapshot.exists) {
+      return snapshot.data()?['full_name']; // Adjust 'full_name' as per your database structure
+    } else {
+      return null;
+    }
+  }
+
+  void _loadUserDetails() async {
+    await _user!.reload();
+    if (_user != null) {
+      String? fetchedName = await fetchFullNameFromDatabase(_user!.uid);
+      setState(() {
+        _user = _auth.currentUser;
+        fullName = fetchedName ?? '';
+      });
+    }
+  }
+
+  // Function to fetch updated user details after changes
+  void _fetchUpdatedUserDetails() async {
+    User? updatedUser = _auth.currentUser;
+    if (updatedUser != null) {
+      await updatedUser.reload();
+      setState(() {
+        _user = updatedUser;
+      });
+    }
+  }
+
+  // Function to update display name in Firebase
+  Future<void> updateDisplayName(String newName) async {
+    User? currentUser = _auth.currentUser;
+    try {
+      if (currentUser != null) {
+        await currentUser.updateDisplayName(newName);
+        _fetchUpdatedUserDetails(); // Update the displayed user details
+      }
+    } catch (e) {
+      print("Error updating display name: $e");
+      // Handle error here if required
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +173,8 @@ class Warden_Profile_Page_state extends State<Warden_Profile_Page>{
             SizedBox(height: 30,),
             Center(
               child: Text(
-                'Bimal Shrestha',
+                //_user != null ? _user!.displayName ?? '' : '', // Displaying user's name
+                fullName ?? '', // Displaying user's full name
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xFF1A1E25),
@@ -129,7 +189,7 @@ class Warden_Profile_Page_state extends State<Warden_Profile_Page>{
             SizedBox(height: 30,),
             Center(
               child: Text(
-                'bimalstha291@gmail.com',
+                _user != null ? _user!.email ?? '' : '', // Displaying user's email
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xFF7D7F88),
@@ -187,9 +247,19 @@ class Warden_Profile_Page_state extends State<Warden_Profile_Page>{
                 ),
               ),
               trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Edit_Profile()));
+              onTap: () async {
+                var newName = await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Warden_EditProfile()),
+                );
+
+                if (newName != null && newName != _user!.displayName) {
+                  // Update fullName if the newName is not null and has changed
+                  setState(() {
+                    fullName = newName;
+                  });
+                  await updateDisplayName(newName); // Update display name in Firebase
+                }
               },
             ),
             ListTile(
@@ -226,7 +296,7 @@ class Warden_Profile_Page_state extends State<Warden_Profile_Page>{
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: (){
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Change_Password_Profile()));
+                    MaterialPageRoute(builder: (context) => Warden_ChangePassword()));
               },
             ),
             SizedBox(height: 40,),

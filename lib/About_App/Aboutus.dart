@@ -13,6 +13,9 @@ class AboutUsPageState extends State<AboutUsPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/header.png', height: 25, width: 270,),
+      ),
       body: Container(
         height: size.height,
         width: size.width,

@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:hostel_finder/Screens/Users/Profile_Page.dart';
-import 'package:hostel_finder/Screens/Warden/Chat/Chats.dart';
-import 'package:hostel_finder/Screens/Warden/Register_Hostel.dart';
-import 'About_App/Aboutus.dart';
-import 'About_App/Feedback.dart';
-import 'About_App/Help_Support.dart';
-import 'Screens/Warden/Warden_Dashboard.dart';
 import 'firebase_options.dart';
 import 'Opening Pages/Opening_Page.dart';
 
@@ -47,7 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: AddHostelDetailsPage(),
+      home: Opening_Page(),
     );
   }
 }

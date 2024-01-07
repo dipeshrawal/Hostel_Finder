@@ -107,7 +107,7 @@ class Chats_state extends State<Chats> with WidgetsBindingObserver{
           ),
           SizedBox(height: 60,),
           userMap != null
-              ? ListTile(
+              ? ListTile (
             onTap: () {
               String roomId = Chats.chatRoomId(
                   _auth.currentUser!.uid ,
@@ -120,7 +120,7 @@ class Chats_state extends State<Chats> with WidgetsBindingObserver{
                     userMap: userMap!,
                   ),
                 ),
-              );
+              ); 
             },
             leading: Icon(Icons.account_box, color: Colors.black),
             title: Text(

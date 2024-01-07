@@ -4,6 +4,9 @@ class HelpAndSupportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/header.png', height: 25, width: 270,),
+      ),
       body: HelpAndSupportBody(),
     );
   }
