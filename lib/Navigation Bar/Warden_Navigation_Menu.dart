@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:hostel_finder/Screens/Users/Profile_Page.dart';
-import 'package:hostel_finder/Screens/Users/Visitor_Dashboard.dart';
-import 'package:hostel_finder/Screens/Warden/Chat/Chats.dart';
 import 'package:hostel_finder/Screens/Warden/Chat/Warden_Chats.dart';
 import 'package:hostel_finder/Screens/Warden/Warden_Dashboard.dart';
 import 'package:hostel_finder/Screens/Warden/Warden_Profile_Page.dart';
@@ -27,7 +24,7 @@ class Warden_NavigationMenu extends StatelessWidget {
           destinations: [
             NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
             NavigationDestination(icon: Icon(Iconsax.message), label: 'Chat'),
-            NavigationDestination(icon: Icon(Iconsax.heart), label: 'Saved'),
+            NavigationDestination(icon: Icon(Iconsax.edit), label: 'Edit'),
             NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
           ],
         ),
@@ -40,6 +37,5 @@ class Warden_NavigationMenu extends StatelessWidget {
 class Warden_NavigationController extends GetxController{
   final Rx<int> selectedIndex = 0.obs;
 
-  final screens = [AddHostelDetailsPage(), Warden_Chats(), Container(color: Colors.yellow), Warden_Profile_Page()];
-
+  final screens = [const Warden_Dashboard(), Warden_Chats(), Container(color: Colors.yellow), Warden_Profile_Page()];
 }

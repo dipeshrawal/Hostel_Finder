@@ -6,6 +6,7 @@ import 'package:hostel_finder/About_App/Help_Support.dart';
 import 'package:hostel_finder/Login_Page.dart';
 import 'package:hostel_finder/Screens/Warden/Add_Student.dart';
 import 'package:hostel_finder/Screens/Warden/Register_Hostel.dart';
+import 'package:hostel_finder/Screens/Warden/StudentDetails.dart';
 import 'package:hostel_finder/Screens/Warden/Warden_Login.dart';
 import 'package:hostel_finder/Signup Auth/Sign_Up.dart';
 
@@ -50,8 +51,8 @@ class Warden_Navigation_Slider extends StatelessWidget {
               ),
             ),
             onTap: (){
-            //   Navigator.push(context,
-            //       MaterialPageRoute(builder: (context) => Warden_Login()));
+               Navigator.push(context,
+                   MaterialPageRoute(builder: (context) => StudentDetails()));
             },
           ),
           ListTile(

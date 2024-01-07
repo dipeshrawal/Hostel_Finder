@@ -1,377 +1,85 @@
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+class Warden_Dashboard extends StatefulWidget {
+  const Warden_Dashboard({super.key});
 
-class AddHostelDetailsPage extends StatefulWidget {
   @override
-  _AddHostelDetailsPageState createState() => _AddHostelDetailsPageState();
+  State<Warden_Dashboard> createState() => Warden_DashboardState();
 }
 
-class _AddHostelDetailsPageState extends State<AddHostelDetailsPage> {
-  TextEditingController hostelFacilitiesController = TextEditingController();
-  TextEditingController locationController = TextEditingController();
-  TextEditingController neighbourhoodController = TextEditingController();
-  TextEditingController institutesController = TextEditingController();
-
-  // Validation flag for each field
-  bool _isLocationValid = true;
-  bool _isNeighbourhoodValid = true;
-  List<String> selectedPhotos = [];
-
-  Future<void> _pickImages() async {
-    List<XFile>? images = await ImagePicker().pickMultiImage();
-    if (images.isNotEmpty) {
-      setState(() {
-        selectedPhotos.addAll(images.map((image) => image.path));
-      });
-    }
-  }
-
+class Warden_DashboardState extends State<Warden_Dashboard> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          'assets/images/header.png',
-          height: 25,
-          width: 270,
+        title: Image.asset('assets/images/header.png', height: 25, width: 270,),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+          child: Column(
+            children: [
+              Container(
+                width: size.width,
+                height: 200,
+                color: Colors.red,
+              ),
+              SizedBox(height: 30,),
+              Row(
+                children: [
+                  Text(
+                    'Adriz Boys Hostel',
+                    style: TextStyle(
+                      color: Color(0xFF1A1E25),
+                      fontSize: 20,
+                      fontFamily: 'Hind',
+                      fontWeight: FontWeight.w700,
+                      height: 0.07,
+                    ),
+                  ),
+                  SizedBox(width: 50,),
+                  Icon(Icons.heart_broken)
+                ],
+              ),
+              SizedBox(height: 20,),
+              Row(children: [
+                Icon(Icons.star, color: Colors.yellow,),
+                SizedBox(width: 5,),
+                Text("4.1(66 reviews)"),
+                SizedBox(width: 80,),
+                Icon(Icons.chair_rounded),
+                SizedBox(width: 5,),
+                Text("1-4 Seater"),
+              ],),
+              SizedBox(height: 10,),
+              Row(children: [
+                Icon(Icons.place_rounded, color: Colors.yellow,),
+                SizedBox(width: 5,),
+                Text("Ratopul, Kathmandu", maxLines: 1,),
+
+                SizedBox(width:50,),
+                Icon(Icons.area_chart_sharp),
+                SizedBox(width: 5,),
+                Text("874 m2"),
+              ],),
+              SizedBox(height: 20,),
+              Container(
+                width: 343,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      width: 0.60,
+                      strokeAlign: BorderSide.strokeAlignCenter,
+                      color: Color(0xFFD6D6D6),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20,),
+            ],
+          ),
         ),
       ),
-      // body: Padding(
-      //   padding: const EdgeInsets.only(left: 20, top: 20),
-      //   child: SingleChildScrollView(
-      //     child: Column(
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: [
-      //         Center(
-      //           child: SizedBox(
-      //             width: 210.59,
-      //             height: 32,
-      //             child: Text(
-      //               'Add Hostel Details',
-      //               style: TextStyle(
-      //                 color: Color(0xFF21205B),
-      //                 fontSize: 25,
-      //                 fontFamily: 'ABeeZee',
-      //                 fontWeight: FontWeight.w700,
-      //                 height: 0,
-      //               ),
-      //             ),
-      //           ),
-      //         ),
-      //         SizedBox(
-      //           height: 20,
-      //         ),
-      //
-      //         // Photo Selector
-      //         GridView.builder(
-      //           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //             crossAxisCount: 3,
-      //             crossAxisSpacing: 8.0,
-      //             mainAxisSpacing: 8.0,
-      //           ),
-      //           itemCount: selectedPhotos.length + 1,
-      //           shrinkWrap: true,
-      //           physics: NeverScrollableScrollPhysics(),
-      //           itemBuilder: (BuildContext context, int index) {
-      //             if (index == selectedPhotos.length) {
-      //               // Add Photo Button
-      //               return InkWell(
-      //                 onTap: _pickImages,
-      //                 child: Container(
-      //                   decoration: BoxDecoration(
-      //                     color: Colors.grey.withOpacity(0.3),
-      //                     borderRadius: BorderRadius.circular(8.0),
-      //                   ),
-      //                   child: Icon(Icons.add),
-      //                 ),
-      //               );
-      //             } else {
-      //               // Display Selected Photo
-      //               return Stack(
-      //                 children: [
-      //                   Container(
-      //                     decoration: BoxDecoration(
-      //                       borderRadius: BorderRadius.circular(8.0),
-      //                       image: DecorationImage(
-      //                         image: FileImage(File(selectedPhotos[index])),
-      //                         fit: BoxFit.cover,
-      //                       ),
-      //                     ),
-      //                   ),
-      //                   Positioned(
-      //                     top: 4,
-      //                     right: 4,
-      //                     child: InkWell(
-      //                       onTap: () {
-      //                         setState(() {
-      //                           selectedPhotos.removeAt(index);
-      //                         });
-      //                       },
-      //                       child: Icon(
-      //                         Icons.cancel,
-      //                         color: Colors.red,
-      //                         size: 20,
-      //                       ),
-      //                     ),
-      //                   ),
-      //                 ],
-      //               );
-      //             }
-      //           },
-      //         ),
-      //
-      //         SizedBox(
-      //           height: 20,
-      //         ),
-      //
-      //         Center(
-      //           child: ElevatedButton(
-      //             onPressed: () async {
-      //               // Check if all fields are valid before submitting hostel details
-      //               if (_isLocationValid && _isNeighbourhoodValid) {
-      //                 try {
-      //                   // Save hostel details to Firestore
-      //                   await FirebaseService().addHostelDetails(
-      //                     hostelFacilities: hostelFacilitiesController.text,
-      //                     location: locationController.text,
-      //                     neighbourhood: neighbourhoodController.text,
-      //                     institutes: institutesController.text,
-      //                     imageUrls: selectedPhotos,
-      //                   );
-      //
-      //                   ScaffoldMessenger.of(context).showSnackBar(
-      //                     SnackBar(
-      //                       content: Text('Hostel Details Submitted!'),
-      //                       duration: Duration(seconds: 1),
-      //                     ),
-      //                   );
-      //
-      //                   // ... Remaining logic remains unchanged
-      //                 } catch (e) {
-      //                   // Show error message for incomplete or invalid fields
-      //                   print('Error : $e');
-      //                   ScaffoldMessenger.of(context).showSnackBar(
-      //                     SnackBar(
-      //                       content:
-      //                           Text('Please fill in all fields correctly.'),
-      //                     ),
-      //                   );
-      //                 }
-      //               } else {
-      //                 // Handle feedback submission errors
-      //                 ScaffoldMessenger.of(context).showSnackBar(
-      //                   SnackBar(
-      //                     content: Text(
-      //                         'Hostel details submission failed. Please try again.'),
-      //                   ),
-      //                 );
-      //               }
-      //             },
-      //             style: ElevatedButton.styleFrom(
-      //               backgroundColor: Color(0xFF14223B),
-      //             ),
-      //             child: Text(
-      //               'Submit Hostel Details                          ',
-      //               textAlign: TextAlign.center,
-      //               style: TextStyle(
-      //                 color: Colors.white,
-      //                 fontSize: 18,
-      //                 fontFamily: 'Hind',
-      //                 fontWeight: FontWeight.w600,
-      //                 height: 0,
-      //               ),
-      //             ),
-      //           ),
-      //         ),
-      //
-      //         SizedBox(
-      //           height: 20,
-      //         ),
-      //
-      //         // Text Fields for Hostel Details
-      //         Padding(
-      //           padding: const EdgeInsets.only(left: 5, right: 15),
-      //           child: Container(
-      //             child: TextField(
-      //               decoration: InputDecoration(
-      //                 prefixIcon: Icon(Icons.hotel),
-      //                 border: OutlineInputBorder(),
-      //                 filled: true,
-      //                 fillColor: Colors.grey.withOpacity(0.3),
-      //                 hintText: 'Hostel Facilities',
-      //               ),
-      //               controller: hostelFacilitiesController,
-      //               style: TextStyle(color: Colors.black),
-      //             ),
-      //           ),
-      //         ),
-      //
-      //         SizedBox(
-      //           height: 20,
-      //         ),
-      //
-      //         Padding(
-      //           padding: const EdgeInsets.only(left: 5, right: 15),
-      //           child: Container(
-      //             child: TextField(
-      //               decoration: InputDecoration(
-      //                 prefixIcon: Icon(Icons.location_on),
-      //                 errorText:
-      //                     _isLocationValid ? null : 'Enter a valid location',
-      //                 border: OutlineInputBorder(),
-      //                 filled: true,
-      //                 fillColor: Colors.grey.withOpacity(0.3),
-      //                 hintText: 'Location',
-      //               ),
-      //               controller: locationController,
-      //               onChanged: (value) {
-      //                 setState(() {
-      //                   _isLocationValid = value.isNotEmpty;
-      //                 });
-      //               },
-      //               style: TextStyle(color: Colors.black),
-      //             ),
-      //           ),
-      //         ),
-      //
-      //         SizedBox(
-      //           height: 20,
-      //         ),
-      //
-      //         Padding(
-      //           padding: const EdgeInsets.only(left: 5, right: 15),
-      //           child: Container(
-      //             child: TextField(
-      //               maxLines: 5,
-      //               decoration: InputDecoration(
-      //                 labelText: "About Location's Neighbourhood",
-      //                 border: OutlineInputBorder(),
-      //                 filled: true,
-      //                 fillColor: Colors.grey.withOpacity(0.3),
-      //               ),
-      //               controller: neighbourhoodController,
-      //               style: TextStyle(color: Colors.black),
-      //             ),
-      //           ),
-      //         ),
-      //
-      //         SizedBox(
-      //           height: 20,
-      //         ),
-      //
-      //         Padding(
-      //           padding: const EdgeInsets.only(left: 5, right: 15),
-      //           child: Container(
-      //             child: TextField(
-      //               maxLines: 5,
-      //               decoration: InputDecoration(
-      //                 labelText: "Institutes and Colleges near Hostel",
-      //                 border: OutlineInputBorder(),
-      //                 filled: true,
-      //                 fillColor: Colors.grey.withOpacity(0.3),
-      //               ),
-      //               controller: institutesController,
-      //               style: TextStyle(color: Colors.black),
-      //             ),
-      //           ),
-      //         ),
-      //
-      //         SizedBox(
-      //           height: 20,
-      //         ),
-      //
-      //         Center(
-      //           child: ElevatedButton(
-      //             onPressed: () async {
-      //               // Check if all fields are valid before submitting hostel details
-      //               if (_isLocationValid && _isNeighbourhoodValid) {
-      //                 try {
-      //                   // Save hostel details to Firestore
-      //                   await FirebaseService().addHostelDetails(
-      //                     hostelFacilities: hostelFacilitiesController.text,
-      //                     location: locationController.text,
-      //                     neighbourhood: neighbourhoodController.text,
-      //                     institutes: institutesController.text,
-      //                     imageUrls: selectedPhotos,
-      //                   );
-      //
-      //                   ScaffoldMessenger.of(context).showSnackBar(
-      //                     SnackBar(
-      //                       content: Text('Hostel Details Submitted!'),
-      //                       duration: Duration(seconds: 1),
-      //                     ),
-      //                   );
-      //
-      //                   // ... Remaining logic remains unchanged
-      //                 } catch (e) {
-      //                   // Show error message for incomplete or invalid fields
-      //                   print('Error : $e');
-      //                   ScaffoldMessenger.of(context).showSnackBar(
-      //                     SnackBar(
-      //                       content:
-      //                           Text('Please fill in all fields correctly.'),
-      //                     ),
-      //                   );
-      //                 }
-      //               } else {
-      //                 // Handle feedback submission errors
-      //                 ScaffoldMessenger.of(context).showSnackBar(
-      //                   SnackBar(
-      //                     content: Text(
-      //                         'Hostel details submission failed. Please try again.'),
-      //                   ),
-      //                 );
-      //               }
-      //             },
-      //             style: ElevatedButton.styleFrom(
-      //               backgroundColor: Color(0xFF14223B),
-      //             ),
-      //             child: Text(
-      //               'Submit Hostel Details                          ',
-      //               textAlign: TextAlign.center,
-      //               style: TextStyle(
-      //                 color: Colors.white,
-      //                 fontSize: 18,
-      //                 fontFamily: 'Hind',
-      //                 fontWeight: FontWeight.w600,
-      //                 height: 0,
-      //               ),
-      //             ),
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
-  }
-}
-
-class FirebaseService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  Future<void> addHostelDetails({
-    required String hostelFacilities,
-    required String location,
-    required String neighbourhood,
-    required String institutes,
-    required List<String> imageUrls,
-  }) async {
-    try {
-      await _firestore.collection('hostels').add({
-        'hostel_facilities': hostelFacilities,
-        'location': location,
-        'neighbourhood': neighbourhood,
-        'institutes_near_hostel': institutes,
-        'image_urls': imageUrls,
-      });
-    } catch (e) {
-      print('Error adding hostel details: $e');
-      rethrow;
-    }
   }
 }
