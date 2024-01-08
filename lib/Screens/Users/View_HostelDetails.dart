@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 class View_HostelDetails extends StatefulWidget {
   const View_HostelDetails({super.key});
@@ -7,6 +8,25 @@ class View_HostelDetails extends StatefulWidget {
 }
 
 class _View_HostelDetailsState extends State<View_HostelDetails> {
+  bool isLoading = false;
+  Map<String, dynamic>? hostelDetailsMap;
+  void onSearch() async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    setState(() {
+      isLoading = true;
+    });
+    await _firestore
+        .collection('warden')
+        .where("warden_id")
+        .get()
+        .then((value) {
+      setState(() {
+        hostelDetailsMap = value.docs[0].data();
+        isLoading = false;
+      });
+      print(hostelDetailsMap);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;

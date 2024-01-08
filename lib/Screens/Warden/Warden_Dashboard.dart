@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hostel_finder/Navigation%20Bar/Warden_Navigation_Slider.dart';
 class Warden_Dashboard extends StatefulWidget {
   const Warden_Dashboard({super.key});
 
@@ -11,6 +12,7 @@ class Warden_DashboardState extends State<Warden_Dashboard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      drawer: const Warden_Navigation_Slider(),
       appBar: AppBar(
         title: Image.asset('assets/images/header.png', height: 25, width: 270,),
       ),

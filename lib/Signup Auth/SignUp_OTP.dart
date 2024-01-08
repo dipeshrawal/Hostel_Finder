@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostel_finder/Navigation%20Bar/Navigation_Menu.dart';
@@ -107,12 +106,14 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
                 onPressed: () async{
                   try{
                     // Create a PhoneAuthCredential with the code
-                    PhoneAuthCredential creds = PhoneAuthProvider.credential(verificationId: Sign_Up.verify, smsCode: code);
+                    PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: Sign_Up.verify, smsCode: code);
                     // Sign the user in (or link) with the credential
-                    User? user = (await auth.signInWithCredential(creds)).user;
+                    FirebaseAuth.instance.signInWithCredential(credential).then((value){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> NavigationMenu()));
+                    });
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => NavigationMenu()),
+                      MaterialPageRoute(builder: (context) => Visitor_Dashboard()),
                     );
 
                   }
@@ -135,7 +136,6 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
                         );
                       },
                     );
-                    print("wrong otp");
                   };
                 },
                 child: Text(
@@ -149,12 +149,10 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
                     height: 0,
                   ),
                 ),
-
                 style: TextButton.styleFrom(
                   backgroundColor: Color(0xFF14223B),
                 ),
               ),
-
               Center(
                 child: TextButton(
                   onPressed: () {

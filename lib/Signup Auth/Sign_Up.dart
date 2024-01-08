@@ -39,6 +39,16 @@ class Sign_Up_state extends State<Sign_Up>{
     contry_code.text= "+977";
     super.initState();
   }
+  void _loadUserDisplayName(User? user) async {
+    if (user != null) {
+      await user.reload();
+      setState(() {
+        user = FirebaseAuth.instance.currentUser;
+        String displayName = user?.displayName ?? '';
+        // Use displayName as needed in your UI
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -213,12 +223,17 @@ class Sign_Up_state extends State<Sign_Up>{
                       _isContactValid ) {
                     try {
                       // Create user with email and password
-                      User? user = (await _auth.createUserWithEmailAndPassword(
+                      // User? user = (await _auth.createUserWithEmailAndPassword(
+                      //   email: email_controller.text,
+                      //   password: password_controller.text,
+                      // )).user;
+                      // Create user with email and password
+                      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
                         email: email_controller.text,
                         password: password_controller.text,
-                      )).user;
+                      );
 
-                      if(user!= null){
+                      //if(user!= null){
                         // Store additional user data in Firestore
                         await _firestore.collection('users').doc(_auth.currentUser!.uid).set({
                           'full_name': fullname_controller.text,
@@ -228,8 +243,9 @@ class Sign_Up_state extends State<Sign_Up>{
                           'status':"Offline",
                           'uid' : _auth.currentUser?.uid,
                         });
-                      }
-                      user?.updateProfile(displayName: fullname_controller.text);
+                      // }
+                      // user?.updateProfile(displayName: fullname_controller.text);
+                      _loadUserDisplayName(userCredential.user);
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -237,15 +253,14 @@ class Sign_Up_state extends State<Sign_Up>{
                           duration: Duration(seconds: 1),
                         ),
                       );
-
                       await FirebaseAuth.instance.verifyPhoneNumber(
                         phoneNumber: '${contry_code.text + mobile_number}',
-                        verificationCompleted: (credential) async{
+                        verificationCompleted: (PhoneAuthCredential credential) async{
                           await auth.signInWithCredential(credential);
                         },
                         verificationFailed: (FirebaseAuthException e) {
                         },
-                        codeSent: (verificationId,resendToken) {
+                        codeSent: (String verificationId, int? resendToken) {
                           Sign_Up.verify = verificationId;
                           // Navigate to the login page or any other page after successful registration
                           Navigator.pushAndRemoveUntil(

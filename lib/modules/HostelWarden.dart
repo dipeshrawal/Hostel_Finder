@@ -9,6 +9,7 @@ class HostelWarden {
     required this.phonenumber,
     required this.email,
     required this.HostelType,
+    required this.warden_id,
   });
   late final String hostelname;
   late final String fullName;
@@ -19,6 +20,7 @@ class HostelWarden {
   late final String phonenumber;
   late final String email;
   late final String HostelType;
+  late final String warden_id;
 
   HostelWarden.fromJson(Map<String, dynamic> json){
     hostelname = json['hostelname'] ?? '';
@@ -30,6 +32,7 @@ class HostelWarden {
     phonenumber = json['phone number'] ?? '';
     email = json['email'] ?? '';
     HostelType = json['Hostel_Type'] ?? '';
+    warden_id = json['warden_id'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +46,7 @@ class HostelWarden {
     data['phone number'] = phonenumber;
     data['email'] = email;
     data['Hostel_Type'] = HostelType;
+    data['warden_id'] = warden_id;
     return data;
   }
 }

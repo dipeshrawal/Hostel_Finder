@@ -446,6 +446,7 @@ class Add_Student_state extends State<Add_Student>{
                         'Institute_name': institutename_controller.text,
                         'Level': level_controller.text,
                         'Occupation': occupation_controller.text,
+                        'hostelwarden_id': _auth.currentUser?.uid,
                       });
 
                       ScaffoldMessenger.of(context).showSnackBar(

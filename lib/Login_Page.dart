@@ -191,13 +191,16 @@ class loginpage_state extends State<Login_Page>{
                       email: email_controller.text, // Assuming email is used as the username
                       password: password_controller.text,
                     );
-                    // Get.snackbar("login successfull", "you are successfully login to system");
-
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Looged in Successfully!'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
                     // If login is successful, navigate to the home page
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => NavigationMenu()),
-
                     );
 
                   } catch (e) {

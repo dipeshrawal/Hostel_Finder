@@ -15,16 +15,18 @@ class StudentDetails extends StatefulWidget {
 
 class StudentDetailsState extends State<StudentDetails> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    String? id = _auth.currentUser?.uid;
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/images/header.png', height: 25, width: 270,),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection('student').snapshots(),
+        stream: _firestore.collection('student').where('hostelwarden_id', isEqualTo: id).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -36,6 +38,7 @@ class StudentDetailsState extends State<StudentDetails> {
             return Center(child: Text('No data available'));
           }
           List<DataRow> rows = [];
+          // if(id){}
           snapshot.data!.docs.forEach((doc) {
             rows.add(DataRow(
               cells: [

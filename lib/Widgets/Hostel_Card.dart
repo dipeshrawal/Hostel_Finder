@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hostel_finder/Screens/Users/View_HostelDetails.dart';
 import 'package:hostel_finder/modules/HostelWarden.dart';
 
 class Hostel_Card extends StatefulWidget {
   final HostelWarden hsward;
   const Hostel_Card({super.key, required this.hsward});
+  static String hostelWarden_id = "";
 
   @override
   State<Hostel_Card> createState() => _Hostel_CardState();
@@ -20,9 +22,22 @@ class _Hostel_CardState extends State<Hostel_Card> {
   // for accessing cloud firestore database
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  @override
+  void initState(){
+    super.initState();
+    Hostel_Card.hostelWarden_id = widget.hsward.warden_id;
+  }
+
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){},
+      onTap: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => View_HostelDetails()),
+
+          );
+
+      },
       child: Container(
         margin: const EdgeInsets.only(top: 10),
         decoration: BoxDecoration(

@@ -1,9 +1,11 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostel_finder/Forget%20Password/Forget_Password.dart';
 import 'package:hostel_finder/Forget%20Password/Reset_Password.dart';
 
 class Send_SMS extends StatefulWidget {
+
 
 
   @override
@@ -14,10 +16,14 @@ class Send_SMS extends StatefulWidget {
 
 class Send_SMS_state extends State<Send_SMS>{
   TextEditingController number_controller = TextEditingController();
+  TextEditingController contry_code = TextEditingController();
+  var mobile_number = "";
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState(){
     super.initState();
+    contry_code.text = "+977";
   }
 
   @override
@@ -114,12 +120,9 @@ class Send_SMS_state extends State<Send_SMS>{
               ),
               SizedBox(height: 40,),
               TextButton(
-                onPressed: () {
+                onPressed: () async{
                   //Act when the button is pressed
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Reset_Password()),
-                  );
+
                 },
                 child: Text(
                   ' Preceed to Send SMS                  ',
