@@ -155,34 +155,34 @@ class Warden_Login_state extends State<Warden_Login>{
                   ),
                 ),
               ),
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Forget_Password()));
-                        //Act when the button is pressed
-                      },
-                      child: Text(
-                        'Forget Password ?',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xD314223B),
-                          fontSize: 16,
-                          fontFamily: 'Hind',
-                          fontWeight: FontWeight.w300,
-                          decoration: TextDecoration.underline,
-
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              SizedBox(height: 60,),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.end,
+              //     children: [
+              //       TextButton(
+              //         onPressed: () {
+              //           Navigator.push(context,
+              //               MaterialPageRoute(builder: (context) => Forget_Password()));
+              //           //Act when the button is pressed
+              //         },
+              //         child: Text(
+              //           'Forget Password ?',
+              //           textAlign: TextAlign.center,
+              //           style: TextStyle(
+              //             color: Color(0xD314223B),
+              //             fontSize: 16,
+              //             fontFamily: 'Hind',
+              //             fontWeight: FontWeight.w300,
+              //             decoration: TextDecoration.underline,
+              //
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               TextButton(
                 onPressed: () async{
                   try {
@@ -190,6 +190,13 @@ class Warden_Login_state extends State<Warden_Login>{
                     await _auth.signInWithEmailAndPassword(
                       email: email_controller.text, // Assuming email is used as the username
                       password: password_controller.text,
+                    );
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Looged in Successfully!'),
+                        duration: Duration(seconds: 2),
+                      ),
                     );
                     // If login is successful, navigate to the home page
                     Navigator.pushReplacement(

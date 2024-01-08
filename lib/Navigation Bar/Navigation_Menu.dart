@@ -24,7 +24,7 @@ class NavigationMenu extends StatelessWidget {
           destinations: [
             NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
             NavigationDestination(icon: Icon(Iconsax.message), label: 'Chat'),
-            NavigationDestination(icon: Icon(Iconsax.heart), label: 'Saved'),
+            // NavigationDestination(icon: Icon(Iconsax.heart), label: 'Saved'),
             NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
           ],
         ),
@@ -37,6 +37,6 @@ class NavigationMenu extends StatelessWidget {
 class NavigationController extends GetxController{
   final Rx<int> selectedIndex = 0.obs;
 
-  final screens = [Visitor_Dashboard(), Chats(), Container(color: Colors.yellow), Profile_Page()];
+  final screens = [Visitor_Dashboard(), Chats(), Profile_Page()];
 
 }

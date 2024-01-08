@@ -3,13 +3,17 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hostel_finder/modules/HostelWarden.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddHostelDetailsPage extends StatefulWidget {
-  const AddHostelDetailsPage({super.key});
 
+  const AddHostelDetailsPage({super.key});
   @override
   State<AddHostelDetailsPage> createState() => AddHostelDetailsPageState();
+
+
+
 }
 
 class AddHostelDetailsPageState extends State<AddHostelDetailsPage> {
@@ -37,11 +41,9 @@ class AddHostelDetailsPageState extends State<AddHostelDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          'assets/images/header.png',
-          height: 25,
-          width: 270,
-        ),
+        automaticallyImplyLeading: false,
+        title: Center(child: Image.asset('assets/images/header.png', height: 25, width: 270,)),
+
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 20, top: 20),
@@ -125,70 +127,6 @@ class AddHostelDetailsPageState extends State<AddHostelDetailsPage> {
                     );
                   }
                 },
-              ),
-
-              SizedBox(
-                height: 20,
-              ),
-
-              Center(
-                child: ElevatedButton(
-                  onPressed: () async {
-                    // Check if all fields are valid before submitting hostel details
-                    if (_isLocationValid && _isNeighbourhoodValid) {
-                      try {
-                        // Save hostel details to Firestore
-                        await FirebaseService().addHostelDetails(
-                          hostelFacilities: hostelFacilitiesController.text,
-                          location: locationController.text,
-                          neighbourhood: neighbourhoodController.text,
-                          institutes: institutesController.text,
-                          imageUrls: selectedPhotos,
-                        );
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Hostel Details Submitted!'),
-                            duration: Duration(seconds: 1),
-                          ),
-                        );
-
-                        // ... Remaining logic remains unchanged
-                      } catch (e) {
-                        // Show error message for incomplete or invalid fields
-                        print('Error : $e');
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content:
-                            Text('Please fill in all fields correctly.'),
-                          ),
-                        );
-                      }
-                    } else {
-                      // Handle feedback submission errors
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                              'Hostel details submission failed. Please try again.'),
-                        ),
-                      );
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF14223B),
-                  ),
-                  child: Text(
-                    'Submit Hostel Details                          ',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontFamily: 'Hind',
-                      fontWeight: FontWeight.w600,
-                      height: 0,
-                    ),
-                  ),
-                ),
               ),
 
               SizedBox(

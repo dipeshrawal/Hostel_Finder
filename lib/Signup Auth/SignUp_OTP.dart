@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostel_finder/Navigation%20Bar/Navigation_Menu.dart';
 import 'package:hostel_finder/Signup Auth/Sign_Up.dart';
-import 'package:hostel_finder/Screens/Users/Visitor_Dashboard.dart';
 import 'package:pinput/pinput.dart';
 
 
@@ -109,36 +108,23 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
                     PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: Sign_Up.verify, smsCode: code);
                     // Sign the user in (or link) with the credential
                     FirebaseAuth.instance.signInWithCredential(credential).then((value){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> NavigationMenu()));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const NavigationMenu()));
                     });
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => Visitor_Dashboard()),
-                    );
-
                   }
                   catch (e) {
                     //Show an error message
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('SMS OTP'),
-                          content: Text('Invalid OTP'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop(); // Close the dialog box
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Invalid OTP'),
+                        duration: Duration(seconds: 2),
+                      ),
                     );
                   };
                 },
-                child: Text(
+                style: TextButton.styleFrom(
+                  backgroundColor: Color(0xFF14223B),
+                ),
+                child: const Text(
                   ' Verify                                     ',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -149,16 +135,6 @@ class SignUp_OTP_state extends State<SignUp_OTP>{
                     height: 0,
                   ),
                 ),
-                style: TextButton.styleFrom(
-                  backgroundColor: Color(0xFF14223B),
-                ),
-              ),
-              Center(
-                child: TextButton(
-                  onPressed: () {
-                    //Act when the button is pressed
-                  },
-                  child: Text('Resend Code'),),
               ),
             ],
           ),

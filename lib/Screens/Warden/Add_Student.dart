@@ -429,12 +429,12 @@ class Add_Student_state extends State<Add_Student>{
                       _isContactValid ) {
                     try {
                       // Create user with email and password
-                      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-                        email: email_controller.text,
-                        password: email_controller.text,
-                      );
+                      // UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+                      //   email: email_controller.text,
+                      //   password: email_controller.text,
+                      // );
                       // Store additional user data in Firestore
-                      await _firestore.collection('student').doc(userCredential.user?.uid).set({
+                      await _firestore.collection('student').add({
                         'full_name': fullname_controller.text,
                         'phone number': phonenumber_controller.text,
                         'email': email_controller.text,

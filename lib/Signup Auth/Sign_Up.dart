@@ -254,7 +254,7 @@ class Sign_Up_state extends State<Sign_Up>{
                         ),
                       );
                       await FirebaseAuth.instance.verifyPhoneNumber(
-                        phoneNumber: '${contry_code.text + mobile_number}',
+                        phoneNumber: contry_code.text + mobile_number,
                         verificationCompleted: (PhoneAuthCredential credential) async{
                           await auth.signInWithCredential(credential);
                         },

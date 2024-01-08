@@ -110,10 +110,6 @@ class ResetPasswordState extends State<ResetPassword> {
                     FirebaseAuth.instance.signInWithCredential(credential).then((value){
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Change_Password()));
                     });
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => Change_Password()),
-                    );
                   } catch (e) {
                     showDialog(
                       context: context,

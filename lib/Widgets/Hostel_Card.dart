@@ -7,7 +7,7 @@ import 'package:hostel_finder/modules/HostelWarden.dart';
 class Hostel_Card extends StatefulWidget {
   final HostelWarden hsward;
   const Hostel_Card({super.key, required this.hsward});
-  static String hostelWarden_id = "";
+
 
   @override
   State<Hostel_Card> createState() => _Hostel_CardState();
@@ -25,7 +25,6 @@ class _Hostel_CardState extends State<Hostel_Card> {
   @override
   void initState(){
     super.initState();
-    Hostel_Card.hostelWarden_id = widget.hsward.warden_id;
   }
 
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class _Hostel_CardState extends State<Hostel_Card> {
       onTap: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => View_HostelDetails()),
+            MaterialPageRoute(builder: (context) => View_HostelDetails(hostelWarden: widget.hsward)),
 
           );
 

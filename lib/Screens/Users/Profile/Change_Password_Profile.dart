@@ -131,7 +131,7 @@ class Change_Password_Profile_State extends State<Change_Password_Profile>{
                     'Change Your Hostel Finder Password',
                     style: TextStyle(
                       color: Color(0xFF14223B),
-                      fontSize: 20,
+                      fontSize: 15,
                     ),
                   ),
                 ],
